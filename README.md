@@ -3,8 +3,8 @@ Hamurabi game implemented in C
 
 # Game details
 
-player - ancient babylonian king Hammurabi.
-resources - people, acres of land, bushels of grain.
+player - ancient babylonian king Hammurabi.  
+resources - people, acres of land, bushels of grain.  
 rounds - 10 (unit = year)
 
 A person can 
