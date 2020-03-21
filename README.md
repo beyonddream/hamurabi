@@ -20,10 +20,10 @@ Each round, an advisor mention
 1. current status of the city.
 2. prior years harvest.
 3. change in population.
-4. Series of questions:
-    a. how many bushels of grain to spend on land.
-    b. seeds.
-    c. feeding the people.
+4. Series of questions:   
+    a. how many bushels of grain to spend on land.   
+    b. seeds.   
+    c. feeding the people.   
 
 The games variation is drive by random number.
 
