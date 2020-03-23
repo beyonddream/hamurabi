@@ -1,3 +1,4 @@
+#include "../include/hamurabi.h"
 #include <stdio.h>
 
 int main() {

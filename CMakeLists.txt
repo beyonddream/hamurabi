@@ -6,6 +6,8 @@ project(hamurabi VERSION 0.1
         )
 
 list(APPEND EXTRA_SRC
+        include/banned.h
+        include/hamurabi.h
         )
 
 add_executable(hamurabi
