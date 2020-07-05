@@ -9,7 +9,7 @@ rounds - 10 (unit = year)
 
 A person can 
 1. farm a set amount of land and produce grain.
-2. Buy a land to neighbors in exchange for grain.
+2. Buy a land from neighbors in exchange for grain.
 3. Die next round if not fed the previous round.
 
 A grain can 
