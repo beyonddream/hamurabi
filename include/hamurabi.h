@@ -22,8 +22,8 @@ typedef struct city_of_sumeria {
 } city_of_sumeria_t;
 
 // api's
-void hamurabi_init(void);
-const city_of_sumeria_t *city_new(void);
-void city_destroy(const city_of_sumeria_t *city_of_sumeria);
+void hamurabi_start(void);
+city_of_sumeria_t *city_new(void);
+void city_destroy(city_of_sumeria_t *city_of_sumeria);
 
 #endif /* HAMURABI_H */

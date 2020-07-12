@@ -9,6 +9,8 @@
 #include "../include/hamurabi.h"
 
 int main() {
-	hamurabi_init();
-	return 0;
+
+	hamurabi_start();
+
+	return EXIT_SUCCESS;
 }

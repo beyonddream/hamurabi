@@ -5,11 +5,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-const city_of_sumeria_t *city_new(void)
+city_of_sumeria_t *city_new(void)
 {
-	const city_of_sumeria_t *city;
+	city_of_sumeria_t *city;
 
-	city = (const city_of_sumeria_t *) malloc(sizeof (city_of_sumeria_t));
+	city = (city_of_sumeria_t *) malloc(sizeof (city_of_sumeria_t));
 	if (city == NULL) {
 		printf("Unable to intialize city. Exiting...\n");
 		exit(EXIT_FAILURE);
@@ -17,10 +17,18 @@ const city_of_sumeria_t *city_new(void)
 
 	memset((void *) city, 0, sizeof(city_of_sumeria_t));
 
+	city->bushels_preserved = (uint8_t) 2800;
+	city->bushels_destroyed = (uint8_t) 200;
+	city->bushels_per_acre  = (uint8_t) 3;
+	city->year = (uint8_t) 0;
+	city->people_starved = (uint8_t) 0;
+	city->people_arrived = (uint8_t) 5;
+	city->population = (uint8_t) 95;
+
 	return city;
 }
 
-void city_destroy(const city_of_sumeria_t *city_of_sumeria)
+void city_destroy(city_of_sumeria_t *city_of_sumeria)
 {
 
 	free((void *) city_of_sumeria);
@@ -73,7 +81,7 @@ int hamurabi_random_event_value(void)
 	return c;
 }
 
-void hamurabi_init(void)
+void hamurabi_start(void)
 {
 	uint8_t d; // people starved
 	uint8_t z; // year
@@ -84,7 +92,9 @@ void hamurabi_init(void)
 	printf("Try your hand at governing ancient sumeria,"
 	    "successfully for a 10-yr term of office.\n");
 
-	z = 0, i = 5, d = 0, q = 0; p = 0;
+	city_of_sumeria_t *city = city_new();
+
+	z = 0, i = 5, d = 0, q = 0; p = 95;
 
 	for(;;) {
 		printf("Hamurabi: I beg to report to you, "
@@ -94,10 +104,20 @@ void hamurabi_init(void)
 		    z, d, i);
 
 		z = z + 1;
+		p = p + i;
 
-		if (q > 0) {
-
+		if (q <= 0) {
+			printf("A horrible plague struck! "
+				"Half the people died.\n");
+			p = (uint8_t) (p / 2);
 		}
-
 	}
+
+end:
+	hamurabi_end();
+
+cleanup:
+	city_destroy(city);
+
+	return;
 }
