@@ -81,6 +81,29 @@ int hamurabi_random_event_value(void)
 	return c;
 }
 
+uint8_t get_population(const city_of_sumeria_t *city)
+{
+
+	return city->population;
+}
+
+uint8_t get_year(const city_of_sumeria_t *city)
+{
+
+	return city->year;
+}
+
+uint8_t get_people_arrived(const city_of_sumeria_t *city)
+{
+
+	return city->people_arrived;
+}
+
+uint8_t get_people_starved(const city_of_sumeria_t *city)
+{
+
+	return city->people_starved;
+}
 void hamurabi_start(void)
 {
 	uint8_t d; // people starved
@@ -94,7 +117,11 @@ void hamurabi_start(void)
 
 	city_of_sumeria_t *city = city_new();
 
-	z = 0, i = 5, d = 0, q = 0; p = 95;
+	z = get_year(city);
+	i = get_people_arrived(city);
+	d = get_people_starved(city);
+	p = get_population(city);
+	q = 0;
 
 	for(;;) {
 		printf("Hamurabi: I beg to report to you, "
@@ -111,6 +138,8 @@ void hamurabi_start(void)
 				"Half the people died.\n");
 			p = (uint8_t) (p / 2);
 		}
+
+		printf("population is now %" PRIu8 "\n", p);
 	}
 
 end:

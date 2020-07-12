@@ -21,9 +21,40 @@ typedef struct city_of_sumeria {
 	uint8_t population;
 } city_of_sumeria_t;
 
-// api's
+/**
+ * Start the game.
+ */
 void hamurabi_start(void);
+
+/**
+ * Get a new city object.
+ */
 city_of_sumeria_t *city_new(void);
+
+/**
+ * Destroy the city object.
+ */
 void city_destroy(city_of_sumeria_t *city_of_sumeria);
+
+/**
+ * get the population of the city.
+ */
+uint8_t get_population(const city_of_sumeria_t *city);
+
+/**
+ * get the current year
+ */
+uint8_t get_year(const city_of_sumeria_t *city);
+
+/**
+ * get the number of people arrived at the city.
+ */
+uint8_t get_people_arrived(const city_of_sumeria_t *city);
+
+/**
+ * get the number of people starved in a given year.
+ */
+uint8_t get_people_starved(const city_of_sumeria_t *city);
+
 
 #endif /* HAMURABI_H */
