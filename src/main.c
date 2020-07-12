@@ -1,7 +1,14 @@
+/**
+ * Hamurabi game - ported from qbasic.
+ * See doc/HMRABI.txt
+ *
+ * author: Arun S Kumar.
+ * License: See LICENSE file.
+ *
+ */
 #include "../include/hamurabi.h"
-#include <stdio.h>
 
 int main() {
-	printf("hello, hamurabi\n");
+	start_game();
 	return 0;
 }

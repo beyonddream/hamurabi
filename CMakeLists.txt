@@ -12,5 +12,6 @@ list(APPEND EXTRA_SRC
 
 add_executable(hamurabi
         src/main.c
+        src/hamurabi.c
         ${EXTRA_SRC}
         )
