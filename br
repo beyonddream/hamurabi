@@ -23,6 +23,9 @@ PROCESSORS=`sysctl -n hw.ncpu`
 make --no-print-directory -j$(($PROCESSORS * 2))
 
 # run
-./hamurabi
+if [ "$1" = "r" ]
+then
+        ./hamurabi
+fi
 
 popd
