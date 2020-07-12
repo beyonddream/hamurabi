@@ -9,6 +9,6 @@
 #include "../include/hamurabi.h"
 
 int main() {
-	start_game();
+	hamurabi_init();
 	return 0;
 }

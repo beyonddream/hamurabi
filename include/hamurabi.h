@@ -15,6 +15,6 @@ typedef struct city_of_sumeria {
 } city_of_sumeria_t;
 
 // api's
-void start_game(void);
+void hamurabi_init(void);
 
 #endif /* HAMURABI_H */

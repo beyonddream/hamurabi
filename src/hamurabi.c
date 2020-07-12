@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-void start_game(void) {
+void hamurabi_init(void) {
 	uint8_t d; // people starved
 	uint8_t z; // year
 	uint8_t i; // people came to the city
