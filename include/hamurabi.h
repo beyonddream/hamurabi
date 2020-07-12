@@ -3,6 +3,13 @@
 
 #include "banned.h"
 #include <stdint.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define RAND(n, x) do {	\
+	srand(time(NULL));	\
+	*(x) = (uint8_t) ((double) rand()/(double) (RAND_MAX + 1u) * (n));	\
+} while (0);
 
 typedef struct city_of_sumeria {
 	uint8_t bushels_preserved;

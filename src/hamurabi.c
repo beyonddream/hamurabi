@@ -27,6 +27,52 @@ void city_destroy(const city_of_sumeria_t *city_of_sumeria)
 	return;
 }
 
+void hamurabi_end(void)
+{
+
+	for (int i = 0; i < 10; i++) {
+		fprintf(stdout, "\a"); // beep sound
+	}
+
+	printf("So long for now.\n");
+	return;
+}
+
+void hamurabi_illegal_input(void)
+{
+
+	printf("Hamurabi: I cannot do "
+	    "what you wish. Get yourself "
+	    "another steward!!!!!\n");
+	return;
+}
+
+void hamurabi_illegal_bushels_input(uint8_t bushels_total)
+{
+
+	printf("Hamurabi: Think again. You have only "
+		"%" PRIu8 " bushels of grain. Now then, ", bushels_total);
+	return;
+}
+
+void hamurabi_illegal_acres_input(uint8_t acres_total)
+{
+
+	printf("Hamurabi: Think again. You own only "
+		"%" PRIu8 " acres. Now then, ", acres_total);
+	return;
+}
+
+int hamurabi_random_event_value(void)
+{
+	int c;
+	RAND(1, &c);
+
+	c = ((int) (c * 5)) + 1;
+
+	return c;
+}
+
 void hamurabi_init(void)
 {
 	uint8_t d; // people starved
