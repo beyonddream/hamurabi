@@ -3,21 +3,29 @@
 #include <stdio.h>
 #include <inttypes.h>
 #include <stdlib.h>
+#include <string.h>
 
 const city_of_sumeria_t *city_new(void)
 {
 	const city_of_sumeria_t *city;
 
 	city = (const city_of_sumeria_t *) malloc(sizeof (city_of_sumeria_t));
-
 	if (city == NULL) {
 		printf("Unable to intialize city. Exiting...\n");
 		exit(EXIT_FAILURE);
 	}
 
+	memset((void *) city, 0, sizeof(city_of_sumeria_t));
+
 	return city;
 }
 
+void city_destroy(const city_of_sumeria_t *city_of_sumeria)
+{
+
+	free((void *) city_of_sumeria);
+	return;
+}
 
 void hamurabi_init(void)
 {
