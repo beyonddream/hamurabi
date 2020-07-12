@@ -8,8 +8,10 @@
 
 #define RAND(n, x) do {	\
 	srand(time(NULL));	\
-	*(x) = (uint8_t) ((double) rand()/(double) (RAND_MAX + 1u) * (n));	\
+	*(x) = RANDOM(n);	\
 } while (0);
+
+#define RANDOM(n) (uint8_t) ((double) rand()/(double) (RAND_MAX + 1u) * (n))
 
 typedef struct city_of_sumeria {
 	uint8_t bushels_preserved;
@@ -55,6 +57,23 @@ uint8_t get_people_arrived(const city_of_sumeria_t *city);
  * get the number of people starved in a given year.
  */
 uint8_t get_people_starved(const city_of_sumeria_t *city);
+
+/**
+ * get bushels per acre
+ */
+uint8_t get_bushels_per_acre(const city_of_sumeria_t *city);
+
+/**
+ * get bushels preserved
+ */
+uint8_t get_bushels_preserved(const city_of_sumeria_t *city);
+
+/**
+ * get bushels destroyed
+ */
+uint8_t get_bushels_destroyed(const city_of_sumeria_t *city);
+
+
 
 
 #endif /* HAMURABI_H */
