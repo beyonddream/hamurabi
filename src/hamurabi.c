@@ -39,7 +39,7 @@ void hamurabi_end(void)
 {
 
 	for (int i = 0; i < 10; i++) {
-		fprintf(stdout, "\a"); // beep sound
+		printf("\a"); // beep sound
 	}
 
 	printf("So long for now.\n");
