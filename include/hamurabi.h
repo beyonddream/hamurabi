@@ -11,16 +11,16 @@
 	*(x) = RANDOM(n);	\
 } while (0);
 
-#define RANDOM(n) (uint8_t) ((double) rand()/(double) (RAND_MAX + 1u) * (n))
+#define RANDOM(n) (uint16_t) (((double) rand() / (double) (RAND_MAX + 1u)) * (n))
 
 typedef struct city_of_sumeria {
-	uint8_t bushels_preserved;
-	uint8_t bushels_destroyed;
-	uint8_t bushels_per_acre;
-	uint8_t year;
-	uint8_t people_starved;
-	uint8_t people_arrived;
-	uint8_t population;
+	uint16_t bushels_preserved;
+	uint16_t bushels_destroyed;
+	uint16_t bushels_per_acre;
+	uint16_t year;
+	uint16_t people_starved;
+	uint16_t people_arrived;
+	uint16_t population;
 } city_of_sumeria_t;
 
 /**
@@ -41,37 +41,37 @@ void city_destroy(city_of_sumeria_t *city_of_sumeria);
 /**
  * get the population of the city.
  */
-uint8_t get_population(const city_of_sumeria_t *city);
+uint16_t get_population(const city_of_sumeria_t *city);
 
 /**
  * get the current year
  */
-uint8_t get_year(const city_of_sumeria_t *city);
+uint16_t get_year(const city_of_sumeria_t *city);
 
 /**
  * get the number of people arrived at the city.
  */
-uint8_t get_people_arrived(const city_of_sumeria_t *city);
+uint16_t get_people_arrived(const city_of_sumeria_t *city);
 
 /**
  * get the number of people starved in a given year.
  */
-uint8_t get_people_starved(const city_of_sumeria_t *city);
+uint16_t get_people_starved(const city_of_sumeria_t *city);
 
 /**
  * get bushels per acre
  */
-uint8_t get_bushels_per_acre(const city_of_sumeria_t *city);
+uint16_t get_bushels_per_acre(const city_of_sumeria_t *city);
 
 /**
  * get bushels preserved
  */
-uint8_t get_bushels_preserved(const city_of_sumeria_t *city);
+uint16_t get_bushels_preserved(const city_of_sumeria_t *city);
 
 /**
  * get bushels destroyed
  */
-uint8_t get_bushels_destroyed(const city_of_sumeria_t *city);
+uint16_t get_bushels_destroyed(const city_of_sumeria_t *city);
 
 
 
