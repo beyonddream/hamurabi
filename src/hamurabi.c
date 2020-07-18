@@ -83,12 +83,12 @@ void hamurabi_illegal_acres_input(uint16_t acres_total)
 
 int hamurabi_random_event_value(void)
 {
-	int c;
-	RAND(1, &c);
+	int random_event_value;
+	RAND(1, &random_event_value);
 
-	c = ((int) (c * 5)) + 1;
+	random_event_value = ((int) (random_event_value * 5)) + 1;
 
-	return c;
+	return random_event_value;
 }
 
 uint16_t get_population(const city_of_sumeria_t *city)
@@ -138,17 +138,17 @@ void hamurabi_start(void)
 	uint16_t people_starved; // people starved
 	uint16_t year; // year
 	uint16_t people_arrived; // people came to the city
-	uint16_t q; // acres to buy/sell
+	uint16_t acres_buy_or_sell; // acres to buy/sell
 	uint16_t population; // population of the city
 	uint16_t bushels_preserved; // bushels preserved
 	uint16_t bushels_destroyed; // bushels destroyed
-	uint16_t h; // total bushels
-	uint16_t y; // bushels per acre
-	uint16_t a; // acres owned by city
-	uint16_t c; // random value
-	uint16_t p1; // percentage of population starved per year
-	uint16_t d1;// total people who died
-	uint16_t l;  // acres per person
+	uint16_t total_bushels; // total bushels
+	uint16_t bushels_per_acre; // bushels per acre
+	uint16_t acres_owned; // acres owned by city
+	uint16_t random_event_value; // random value
+	uint16_t population_starved_per_yr; // percentage of population starved per year
+	uint16_t people_died_total;// total people who died
+	uint16_t acres_per_person;  // acres per person
 
 	printf("Try your hand at governing ancient sumeria,"
 	    "successfully for a 10-yr term of office.\n");
@@ -161,10 +161,10 @@ void hamurabi_start(void)
 	population = get_population(city);
 	bushels_preserved = get_bushels_preserved(city);
 	bushels_destroyed = get_bushels_destroyed(city);
-	h = bushels_preserved + bushels_destroyed;
-	y = get_bushels_per_acre(city);
-	a = h / y;
-	q = 1;
+	total_bushels = bushels_preserved + bushels_destroyed;
+	bushels_per_acre = get_bushels_per_acre(city);
+	acres_owned = total_bushels / bushels_per_acre;
+	acres_buy_or_sell = 1;
 
 	for(;;) {
 		printf("Hamurabi: I beg to report to you, "
@@ -176,69 +176,69 @@ void hamurabi_start(void)
 		year = year + 1;
 		population = population + people_arrived;
 
-		if (q <= 0) {
+		if (acres_buy_or_sell <= 0) {
 			printf("A horrible plague struck! "
 				"Half the people died.\n");
 			population = (uint16_t) (population / 2);
 		}
 
 		printf("population is now %" PRIu16 "\n", population);
-		printf("The city owns %" PRIu16 " acres.\n", a);
-		printf("You have harvested %" PRIu16 " bushels per acre.\n", y);
+		printf("The city owns %" PRIu16 " acres.\n", acres_owned);
+		printf("You have harvested %" PRIu16 " bushels per acre.\n", bushels_per_acre);
 		printf("Rats ate %" PRIu16 " bushels.\n", bushels_destroyed);
 		printf("You now have %" PRIu16 " bushels in store.\n", bushels_preserved);
 
 		if (year < 11) {
-			RAND(10, &c);
-			y = c + 17;
-			printf("Land is trading at %" PRIu16 " bushels per acre.\n", y);
+			RAND(10, &random_event_value);
+			bushels_per_acre = random_event_value + 17;
+			printf("Land is trading at %" PRIu16 " bushels per acre.\n", bushels_per_acre);
 
 buy_acres:
 			printf("How many acres do you wish to buy?");
-			scanf("%" PRIu16, &q);
-			if (q < 0) {
+			scanf("%" PRIu16, &acres_buy_or_sell);
+			if (acres_buy_or_sell < 0) {
 				hamurabi_illegal_input();
 				goto end;
 			}
-			if ((y * q) > bushels_preserved) {
+			if ((bushels_per_acre * acres_buy_or_sell) > bushels_preserved) {
 				hamurabi_illegal_bushels_input(bushels_preserved);
 				goto buy_acres;
 			}
-			if (q != 0) {
-				a = a + q;
-				bushels_preserved = bushels_preserved - (y * q);
-				c = 0;
+			if (acres_buy_or_sell != 0) {
+				acres_owned += acres_buy_or_sell;
+				bushels_preserved = bushels_preserved - (bushels_per_acre * acres_buy_or_sell);
+				random_event_value = 0;
 				goto feed_people;
 			}
 sell_acres:
 			printf("How many acres do you wish to sell?");
-			scanf("%" PRIu16, &q);
-			if (q < 0) {
+			scanf("%" PRIu16, &acres_buy_or_sell);
+			if (acres_buy_or_sell < 0) {
 				hamurabi_illegal_input();
 				goto end;
 			}
-			if (q >= a) {
-				hamurabi_illegal_acres_input(a);
+			if (acres_buy_or_sell >= acres_owned) {
+				hamurabi_illegal_acres_input(acres_owned);
 				goto sell_acres;
 			}
 
-			a = a - q;
-			bushels_preserved = bushels_preserved + (y * q);
-			c = 0;
+			acres_owned -= acres_buy_or_sell;
+			bushels_preserved = bushels_preserved + (bushels_per_acre * acres_buy_or_sell);
+			random_event_value = 0;
 feed_people:
 			printf("How many bushels do you wish to feed your people?");
-			scanf("%" PRIu16, &q);
-			if (q < 0) {
+			scanf("%" PRIu16, &acres_buy_or_sell);
+			if (acres_buy_or_sell < 0) {
 				hamurabi_illegal_input();
 				goto end;
 			}
-			if (q > bushels_preserved) {
+			if (acres_buy_or_sell > bushels_preserved) {
 				hamurabi_illegal_bushels_input(bushels_preserved);
 				goto feed_people;
 			}
 
-			bushels_preserved = bushels_preserved - q;
-			c = 1;
+			bushels_preserved = bushels_preserved - acres_buy_or_sell;
+			random_event_value = 1;
 plant_seeds:
 			printf("How many acres do you wish to plant with seed?");
 			scanf("%" PRIu16, &people_starved);
@@ -249,8 +249,8 @@ plant_seeds:
 			if (people_starved == 0) {
 				goto bounty_harvest;
 			}
-			if (people_starved > a) {
-				hamurabi_illegal_acres_input(a);
+			if (people_starved > acres_owned) {
+				hamurabi_illegal_acres_input(acres_owned);
 				goto plant_seeds;
 			}
 			if (((uint16_t) (people_starved / 2)) >= bushels_preserved) {
@@ -265,50 +265,50 @@ plant_seeds:
 
 			bushels_preserved = bushels_preserved - ((uint16_t) (people_starved / 2));
 bounty_harvest:
-			c = hamurabi_random_event_value();
-			y = c;
-			h = people_starved * y;
+			random_event_value = hamurabi_random_event_value();
+			bushels_per_acre = random_event_value;
+			total_bushels = people_starved * bushels_per_acre;
 			bushels_destroyed = 0;
-			c = hamurabi_random_event_value();
-			if (((uint16_t) (c / 2.0)) == (c / 2.0)) {
-				bushels_destroyed = (uint16_t) (bushels_preserved / c);
+			random_event_value = hamurabi_random_event_value();
+			if (((uint16_t) (random_event_value / 2.0)) == (random_event_value / 2.0)) {
+				bushels_destroyed = (uint16_t) (bushels_preserved / random_event_value);
 			}
 
-			bushels_preserved = bushels_preserved - bushels_destroyed + h;
-			c = hamurabi_random_event_value();
-			people_arrived = (uint16_t) (c * ((20 * a) + bushels_preserved) / population / (100 + 1));
-			c = (uint16_t) (q / 20);
-			q = (uint16_t) (10 * ((2 * RANDOM(1)) - 0.3));
-			if (population < c) {
+			bushels_preserved += total_bushels - bushels_destroyed;
+			random_event_value = hamurabi_random_event_value();
+			people_arrived = (uint16_t) (random_event_value * ((20 * acres_owned) + bushels_preserved) / population / (100 + 1));
+			random_event_value = (uint16_t) (acres_buy_or_sell / 20);
+			acres_buy_or_sell = (uint16_t) (10 * ((2 * RANDOM(1)) - 0.3));
+			if (population < random_event_value) {
 				people_starved = 0;
 				continue;
 			}
 
-			people_starved = population - c;
+			people_starved = population - random_event_value;
 			if (people_starved > (0.45 * population)) {
 				printf("You starved %" PRIu16 " people in one year\n", people_starved);
 				goto hamurabi_judgement_worse;
 			}
-			p1 = (((year - 1) * p1) + (people_starved * 100 / population)) / year;
-			population = c;
-			d1 = d1 + people_starved;
+			population_starved_per_yr = (((year - 1) * population_starved_per_yr) + (people_starved * 100 / population)) / year;
+			population = random_event_value;
+			people_died_total += people_starved;
 			continue;
 		} else {
 
-			l = a / population;
+			acres_per_person = acres_owned / population;
 
 			printf("In your 10-yr term of office, %" PRIu16 " percent of the "
 				"population starved per year on average, i.e., A total of "
 				"%" PRIu16 " people died!! You started with 10 acres per person "
-				"and ended with %" PRIu16 " acres per person.\n", p1, d1, l);
+				"and ended with %" PRIu16 " acres per person.\n", population_starved_per_yr, people_died_total, acres_per_person);
 
-			if ((p1 > 33) || (l < 7)) {
+			if ((population_starved_per_yr > 33) || (acres_per_person < 7)) {
 				goto hamurabi_judgement_worse;
 			}
-			if ((p1 > 10) || (l < 9)) {
+			if ((population_starved_per_yr > 10) || (acres_per_person < 9)) {
 				goto hamurabi_judgement_bad;
 			}
-			if ((p1 > 3) || (l < 10)) {
+			if ((population_starved_per_yr > 3) || (acres_per_person < 10)) {
 				goto hamurabi_judgement_fair;
 			}
 			goto hamurabi_judgement_good;
