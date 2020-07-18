@@ -5,6 +5,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct city_of_sumeria {
+	uint16_t bushels_preserved;
+	uint16_t bushels_destroyed;
+	uint16_t bushels_per_acre;
+	uint16_t year;
+	uint16_t people_starved;
+	uint16_t people_arrived;
+	uint16_t population;
+};
+
 city_of_sumeria_t *city_new(void)
 {
 	city_of_sumeria_t *city;
@@ -131,7 +141,7 @@ void hamurabi_start(void)
 	uint16_t q; // acres to buy/sell
 	uint16_t population; // population of the city
 	uint16_t bushels_preserved; // bushels preserved
-	uint16_t e; // bushels destroyed
+	uint16_t bushels_destroyed; // bushels destroyed
 	uint16_t h; // total bushels
 	uint16_t y; // bushels per acre
 	uint16_t a; // acres owned by city
@@ -150,8 +160,8 @@ void hamurabi_start(void)
 	people_starved = get_people_starved(city);
 	population = get_population(city);
 	bushels_preserved = get_bushels_preserved(city);
-	e = get_bushels_destroyed(city);
-	h = bushels_preserved + e;
+	bushels_destroyed = get_bushels_destroyed(city);
+	h = bushels_preserved + bushels_destroyed;
 	y = get_bushels_per_acre(city);
 	a = h / y;
 	q = 1;
@@ -175,7 +185,7 @@ void hamurabi_start(void)
 		printf("population is now %" PRIu16 "\n", population);
 		printf("The city owns %" PRIu16 " acres.\n", a);
 		printf("You have harvested %" PRIu16 " bushels per acre.\n", y);
-		printf("Rats ate %" PRIu16 " bushels.\n", e);
+		printf("Rats ate %" PRIu16 " bushels.\n", bushels_destroyed);
 		printf("You now have %" PRIu16 " bushels in store.\n", bushels_preserved);
 
 		if (year < 11) {
@@ -258,13 +268,13 @@ bounty_harvest:
 			c = hamurabi_random_event_value();
 			y = c;
 			h = people_starved * y;
-			e = 0;
+			bushels_destroyed = 0;
 			c = hamurabi_random_event_value();
 			if (((uint16_t) (c / 2.0)) == (c / 2.0)) {
-				e = (uint16_t) (bushels_preserved / c);
+				bushels_destroyed = (uint16_t) (bushels_preserved / c);
 			}
 
-			bushels_preserved = bushels_preserved - e + h;
+			bushels_preserved = bushels_preserved - bushels_destroyed + h;
 			c = hamurabi_random_event_value();
 			people_arrived = (uint16_t) (c * ((20 * a) + bushels_preserved) / population / (100 + 1));
 			c = (uint16_t) (q / 20);

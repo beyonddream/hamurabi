@@ -13,15 +13,7 @@
 
 #define RANDOM(n) (uint16_t) (((double) rand() / (double) (RAND_MAX + 1u)) * (n))
 
-typedef struct city_of_sumeria {
-	uint16_t bushels_preserved;
-	uint16_t bushels_destroyed;
-	uint16_t bushels_per_acre;
-	uint16_t year;
-	uint16_t people_starved;
-	uint16_t people_arrived;
-	uint16_t population;
-} city_of_sumeria_t;
+typedef struct city_of_sumeria city_of_sumeria_t;
 
 /**
  * Start the game.
