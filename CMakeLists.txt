@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.17)
 
 project(hamurabi VERSION 0.1
         DESCRIPTION "Hamurabi - a text adventure game written in C99"

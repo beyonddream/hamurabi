@@ -125,12 +125,12 @@ uint16_t get_bushels_destroyed(const city_of_sumeria_t *city)
 
 void hamurabi_start(void)
 {
-	uint16_t d; // people starved
-	uint16_t z; // year
-	uint16_t i; // people came to the city
+	uint16_t people_starved; // people starved
+	uint16_t year; // year
+	uint16_t people_arrived; // people came to the city
 	uint16_t q; // acres to buy/sell
-	uint16_t p; // population of the city
-	uint16_t s; // bushels preserved
+	uint16_t population; // population of the city
+	uint16_t bushels_preserved; // bushels preserved
 	uint16_t e; // bushels destroyed
 	uint16_t h; // total bushels
 	uint16_t y; // bushels per acre
@@ -145,13 +145,13 @@ void hamurabi_start(void)
 
 	city_of_sumeria_t *city = city_new();
 
-	z = get_year(city);
-	i = get_people_arrived(city);
-	d = get_people_starved(city);
-	p = get_population(city);
-	s = get_bushels_preserved(city);
+	year = get_year(city);
+	people_arrived = get_people_arrived(city);
+	people_starved = get_people_starved(city);
+	population = get_population(city);
+	bushels_preserved = get_bushels_preserved(city);
 	e = get_bushels_destroyed(city);
-	h = s + e;
+	h = bushels_preserved + e;
 	y = get_bushels_per_acre(city);
 	a = h / y;
 	q = 1;
@@ -161,24 +161,24 @@ void hamurabi_start(void)
 		    "In year %" PRIu16 ", "
 		    "%" PRIu16 " people starved, "
 		    "%" PRIu16 " came to the city.\n",
-		    z, d, i);
+		    year, people_starved, people_arrived);
 
-		z = z + 1;
-		p = p + i;
+		year = year + 1;
+		population = population + people_arrived;
 
 		if (q <= 0) {
 			printf("A horrible plague struck! "
 				"Half the people died.\n");
-			p = (uint16_t) (p / 2);
+			population = (uint16_t) (population / 2);
 		}
 
-		printf("population is now %" PRIu16 "\n", p);
+		printf("population is now %" PRIu16 "\n", population);
 		printf("The city owns %" PRIu16 " acres.\n", a);
 		printf("You have harvested %" PRIu16 " bushels per acre.\n", y);
 		printf("Rats ate %" PRIu16 " bushels.\n", e);
-		printf("You now have %" PRIu16 " bushels in store.\n", s);
+		printf("You now have %" PRIu16 " bushels in store.\n", bushels_preserved);
 
-		if (z < 11) {
+		if (year < 11) {
 			RAND(10, &c);
 			y = c + 17;
 			printf("Land is trading at %" PRIu16 " bushels per acre.\n", y);
@@ -190,13 +190,13 @@ buy_acres:
 				hamurabi_illegal_input();
 				goto end;
 			}
-			if ((y * q) > s) {
-				hamurabi_illegal_bushels_input(s);
+			if ((y * q) > bushels_preserved) {
+				hamurabi_illegal_bushels_input(bushels_preserved);
 				goto buy_acres;
 			}
 			if (q != 0) {
 				a = a + q;
-				s = s - (y * q);
+				bushels_preserved = bushels_preserved - (y * q);
 				c = 0;
 				goto feed_people;
 			}
@@ -213,7 +213,7 @@ sell_acres:
 			}
 
 			a = a - q;
-			s = s + (y * q);
+			bushels_preserved = bushels_preserved + (y * q);
 			c = 0;
 feed_people:
 			printf("How many bushels do you wish to feed your people?");
@@ -222,70 +222,70 @@ feed_people:
 				hamurabi_illegal_input();
 				goto end;
 			}
-			if (q > s) {
-				hamurabi_illegal_bushels_input(s);
+			if (q > bushels_preserved) {
+				hamurabi_illegal_bushels_input(bushels_preserved);
 				goto feed_people;
 			}
 
-			s = s - q;
+			bushels_preserved = bushels_preserved - q;
 			c = 1;
 plant_seeds:
 			printf("How many acres do you wish to plant with seed?");
-			scanf("%" PRIu16, &d);
-			if (d < 0) {
+			scanf("%" PRIu16, &people_starved);
+			if (people_starved < 0) {
 				hamurabi_illegal_input();
 				goto end;
 			}
-			if (d == 0) {
+			if (people_starved == 0) {
 				goto bounty_harvest;
 			}
-			if (d > a) {
+			if (people_starved > a) {
 				hamurabi_illegal_acres_input(a);
 				goto plant_seeds;
 			}
-			if (((uint16_t) (d / 2)) >= s) {
-				hamurabi_illegal_bushels_input(s);
+			if (((uint16_t) (people_starved / 2)) >= bushels_preserved) {
+				hamurabi_illegal_bushels_input(bushels_preserved);
 				goto plant_seeds;
 			}
-			if (d >= (10 * p)) {
+			if (people_starved >= (10 * population)) {
 				printf("But you have only %" PRIu16 " people to tend"
-					" the fields. Now then, ", p);
+					" the fields. Now then, ", population);
 				goto plant_seeds;
 			}
 
-			s = s - ((uint16_t) (d / 2));
+			bushels_preserved = bushels_preserved - ((uint16_t) (people_starved / 2));
 bounty_harvest:
 			c = hamurabi_random_event_value();
 			y = c;
-			h = d * y;
+			h = people_starved * y;
 			e = 0;
 			c = hamurabi_random_event_value();
 			if (((uint16_t) (c / 2.0)) == (c / 2.0)) {
-				e = (uint16_t) (s / c);
+				e = (uint16_t) (bushels_preserved / c);
 			}
 
-			s = s - e + h;
+			bushels_preserved = bushels_preserved - e + h;
 			c = hamurabi_random_event_value();
-			i = (uint16_t) (c * ((20 * a) + s) / p / (100 + 1));
+			people_arrived = (uint16_t) (c * ((20 * a) + bushels_preserved) / population / (100 + 1));
 			c = (uint16_t) (q / 20);
 			q = (uint16_t) (10 * ((2 * RANDOM(1)) - 0.3));
-			if (p < c) {
-				d = 0;
+			if (population < c) {
+				people_starved = 0;
 				continue;
 			}
 
-			d = p - c;
-			if (d > (0.45 * p)) {
-				printf("You starved %" PRIu16 " people in one year\n", d);
+			people_starved = population - c;
+			if (people_starved > (0.45 * population)) {
+				printf("You starved %" PRIu16 " people in one year\n", people_starved);
 				goto hamurabi_judgement_worse;
 			}
-			p1 = (((z - 1) * p1) + (d * 100 / p)) / z;
-			p = c;
-			d1 = d1 + d;
+			p1 = (((year - 1) * p1) + (people_starved * 100 / population)) / year;
+			population = c;
+			d1 = d1 + people_starved;
 			continue;
 		} else {
 
-			l = a / p;
+			l = a / population;
 
 			printf("In your 10-yr term of office, %" PRIu16 " percent of the "
 				"population starved per year on average, i.e., A total of "
@@ -318,7 +318,7 @@ hamurabi_judgement_bad:
 
 hamurabi_judgement_fair:
 		{
-			uint16_t x = (uint16_t) (p * 0.8 * RANDOM(1));
+			uint16_t x = (uint16_t) (population * 0.8 * RANDOM(1));
 			printf("Your performance could have been somewhat better, but really wasn't "
 			    "too bad at all. %" PRIu16 " people would dearly like to see you "
 			    "assasinated but we all have our trivial problems.\n", x);
