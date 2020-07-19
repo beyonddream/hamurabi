@@ -135,6 +135,20 @@ uint16_t get_bushels_destroyed(const city_of_sumeria_t *city)
 	return city->bushels_destroyed;
 }
 
+void report_summary(const city_of_sumeria_t *city)
+{
+
+	printf("Hamurabi: I beg to report to you, "
+	       "In year %" PRIu16 ", "
+	       "%" PRIu16 " people starved, "
+	       "%" PRIu16 " came to the city.\n",
+	       city->year,
+	       city->people_starved,
+	       city->people_arrived);
+
+	return;
+}
+
 void hamurabi_start(void)
 {
 	uint16_t people_starved;            // people starved
@@ -152,7 +166,7 @@ void hamurabi_start(void)
 	uint16_t people_died_total;         // total people who died
 	uint16_t acres_per_person;          // acres per person
 
-	printf("Try your hand at governing ancient sumeria,"
+	printf("Try your and at governing ancient sumeria,"
 	       "successfully for a 10-yr term of office.\n");
 
 	city_of_sumeria_t *city = city_new();
@@ -169,16 +183,10 @@ void hamurabi_start(void)
 	acres_buy_or_sell = 1;
 
 	for (;;) {
-		printf("Hamurabi: I beg to report to you, "
-		       "In year %" PRIu16 ", "
-		       "%" PRIu16 " people starved, "
-		       "%" PRIu16 " came to the city.\n",
-		       year,
-		       people_starved,
-		       people_arrived);
+		report_summary(city);
 
-		year = year + 1;
-		population = population + people_arrived;
+		year += 1;
+		population += people_arrived;
 
 		if (acres_buy_or_sell <= 0) {
 			printf("A horrible plague struck! "
