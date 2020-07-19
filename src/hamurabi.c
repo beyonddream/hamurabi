@@ -1,7 +1,7 @@
 #include "../include/hamurabi.h"
+#include <inttypes.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include <inttypes.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -19,21 +19,21 @@ city_of_sumeria_t *city_new(void)
 {
 	city_of_sumeria_t *city;
 
-	city = (city_of_sumeria_t *) malloc(sizeof (city_of_sumeria_t));
+	city = (city_of_sumeria_t *)malloc(sizeof(city_of_sumeria_t));
 	if (city == NULL) {
 		printf("Unable to intialize city. Exiting...\n");
 		exit(EXIT_FAILURE);
 	}
 
-	memset((void *) city, 0, sizeof(city_of_sumeria_t));
+	memset((void *)city, 0, sizeof(city_of_sumeria_t));
 
-	city->bushels_preserved = (uint16_t) 2800;
-	city->bushels_destroyed = (uint16_t) 200;
-	city->bushels_per_acre  = (uint16_t) 3;
-	city->year = (uint16_t) 1;
-	city->people_starved = (uint16_t) 0;
-	city->people_arrived = (uint16_t) 5;
-	city->population = (uint16_t) 95;
+	city->bushels_preserved = (uint16_t)2800;
+	city->bushels_destroyed = (uint16_t)200;
+	city->bushels_per_acre = (uint16_t)3;
+	city->year = (uint16_t)1;
+	city->people_starved = (uint16_t)0;
+	city->people_arrived = (uint16_t)5;
+	city->population = (uint16_t)95;
 
 	return city;
 }
@@ -41,7 +41,7 @@ city_of_sumeria_t *city_new(void)
 void city_destroy(city_of_sumeria_t *city_of_sumeria)
 {
 
-	free((void *) city_of_sumeria);
+	free((void *)city_of_sumeria);
 	return;
 }
 
@@ -60,8 +60,8 @@ void hamurabi_illegal_input(void)
 {
 
 	printf("Hamurabi: I cannot do "
-	    "what you wish. Get yourself "
-	    "another steward!!!!!\n");
+	       "what you wish. Get yourself "
+	       "another steward!!!!!\n");
 	return;
 }
 
@@ -69,7 +69,8 @@ void hamurabi_illegal_bushels_input(uint16_t bushels_total)
 {
 
 	printf("Hamurabi: Think again. You have only "
-		"%" PRIu16 " bushels of grain. Now then, ", bushels_total);
+	       "%" PRIu16 " bushels of grain. Now then, ",
+	       bushels_total);
 	return;
 }
 
@@ -77,7 +78,8 @@ void hamurabi_illegal_acres_input(uint16_t acres_total)
 {
 
 	printf("Hamurabi: Think again. You own only "
-		"%" PRIu16 " acres. Now then, ", acres_total);
+	       "%" PRIu16 " acres. Now then, ",
+	       acres_total);
 	return;
 }
 
@@ -86,7 +88,7 @@ int hamurabi_random_event_value(void)
 	int random_event_value;
 	RAND(1, &random_event_value);
 
-	random_event_value = ((int) (random_event_value * 5)) + 1;
+	random_event_value = ((int)(random_event_value * 5)) + 1;
 
 	return random_event_value;
 }
@@ -135,23 +137,23 @@ uint16_t get_bushels_destroyed(const city_of_sumeria_t *city)
 
 void hamurabi_start(void)
 {
-	uint16_t people_starved; // people starved
-	uint16_t year; // year
-	uint16_t people_arrived; // people came to the city
-	uint16_t acres_buy_or_sell; // acres to buy/sell
-	uint16_t population; // population of the city
-	uint16_t bushels_preserved; // bushels preserved
-	uint16_t bushels_destroyed; // bushels destroyed
-	uint16_t total_bushels; // total bushels
-	uint16_t bushels_per_acre; // bushels per acre
-	uint16_t acres_owned; // acres owned by city
-	uint16_t random_event_value; // random value
+	uint16_t people_starved;            // people starved
+	uint16_t year;                      // year
+	uint16_t people_arrived;            // people came to the city
+	uint16_t acres_buy_or_sell;         // acres to buy/sell
+	uint16_t population;                // population of the city
+	uint16_t bushels_preserved;         // bushels preserved
+	uint16_t bushels_destroyed;         // bushels destroyed
+	uint16_t total_bushels;             // total bushels
+	uint16_t bushels_per_acre;          // bushels per acre
+	uint16_t acres_owned;               // acres owned by city
+	uint16_t random_event_value;        // random value
 	uint16_t population_starved_per_yr; // percentage of population starved per year
-	uint16_t people_died_total;// total people who died
-	uint16_t acres_per_person;  // acres per person
+	uint16_t people_died_total;         // total people who died
+	uint16_t acres_per_person;          // acres per person
 
 	printf("Try your hand at governing ancient sumeria,"
-	    "successfully for a 10-yr term of office.\n");
+	       "successfully for a 10-yr term of office.\n");
 
 	city_of_sumeria_t *city = city_new();
 
@@ -166,20 +168,22 @@ void hamurabi_start(void)
 	acres_owned = total_bushels / bushels_per_acre;
 	acres_buy_or_sell = 1;
 
-	for(;;) {
+	for (;;) {
 		printf("Hamurabi: I beg to report to you, "
-		    "In year %" PRIu16 ", "
-		    "%" PRIu16 " people starved, "
-		    "%" PRIu16 " came to the city.\n",
-		    year, people_starved, people_arrived);
+		       "In year %" PRIu16 ", "
+		       "%" PRIu16 " people starved, "
+		       "%" PRIu16 " came to the city.\n",
+		       year,
+		       people_starved,
+		       people_arrived);
 
 		year = year + 1;
 		population = population + people_arrived;
 
 		if (acres_buy_or_sell <= 0) {
 			printf("A horrible plague struck! "
-				"Half the people died.\n");
-			population = (uint16_t) (population / 2);
+			       "Half the people died.\n");
+			population = (uint16_t)(population / 2);
 		}
 
 		printf("population is now %" PRIu16 "\n", population);
@@ -253,32 +257,33 @@ plant_seeds:
 				hamurabi_illegal_acres_input(acres_owned);
 				goto plant_seeds;
 			}
-			if (((uint16_t) (people_starved / 2)) >= bushels_preserved) {
+			if (((uint16_t)(people_starved / 2)) >= bushels_preserved) {
 				hamurabi_illegal_bushels_input(bushels_preserved);
 				goto plant_seeds;
 			}
 			if (people_starved >= (10 * population)) {
 				printf("But you have only %" PRIu16 " people to tend"
-					" the fields. Now then, ", population);
+				       " the fields. Now then, ",
+				       population);
 				goto plant_seeds;
 			}
 
-			bushels_preserved = bushels_preserved - ((uint16_t) (people_starved / 2));
+			bushels_preserved = bushels_preserved - ((uint16_t)(people_starved / 2));
 bounty_harvest:
 			random_event_value = hamurabi_random_event_value();
 			bushels_per_acre = random_event_value;
 			total_bushels = people_starved * bushels_per_acre;
 			bushels_destroyed = 0;
 			random_event_value = hamurabi_random_event_value();
-			if (((uint16_t) (random_event_value / 2.0)) == (random_event_value / 2.0)) {
-				bushels_destroyed = (uint16_t) (bushels_preserved / random_event_value);
+			if (((uint16_t)(random_event_value / 2.0)) == (random_event_value / 2.0)) {
+				bushels_destroyed = (uint16_t)(bushels_preserved / random_event_value);
 			}
 
 			bushels_preserved += total_bushels - bushels_destroyed;
 			random_event_value = hamurabi_random_event_value();
-			people_arrived = (uint16_t) (random_event_value * ((20 * acres_owned) + bushels_preserved) / population / (100 + 1));
-			random_event_value = (uint16_t) (acres_buy_or_sell / 20);
-			acres_buy_or_sell = (uint16_t) (10 * ((2 * RANDOM(1)) - 0.3));
+			people_arrived = (uint16_t)(random_event_value * ((20 * acres_owned) + bushels_preserved) / population / (100 + 1));
+			random_event_value = (uint16_t)(acres_buy_or_sell / 20);
+			acres_buy_or_sell = (uint16_t)(10 * ((2 * RANDOM(1)) - 0.3));
 			if (population < random_event_value) {
 				people_starved = 0;
 				continue;
@@ -298,9 +303,12 @@ bounty_harvest:
 			acres_per_person = acres_owned / population;
 
 			printf("In your 10-yr term of office, %" PRIu16 " percent of the "
-				"population starved per year on average, i.e., A total of "
-				"%" PRIu16 " people died!! You started with 10 acres per person "
-				"and ended with %" PRIu16 " acres per person.\n", population_starved_per_yr, people_died_total, acres_per_person);
+			       "population starved per year on average, i.e., A total of "
+			       "%" PRIu16 " people died!! You started with 10 acres per person "
+			       "and ended with %" PRIu16 " acres per person.\n",
+			       population_starved_per_yr,
+			       people_died_total,
+			       acres_per_person);
 
 			if ((population_starved_per_yr > 33) || (acres_per_person < 7)) {
 				goto hamurabi_judgement_worse;
@@ -316,28 +324,28 @@ bounty_harvest:
 
 hamurabi_judgement_worse:
 		printf("Due to this extreme mismanagement you have not only been impeached "
-			"and thrown out of office but you have also been declared "
-			"'NATIONAL FINK'!!\n");
+		       "and thrown out of office but you have also been declared "
+		       "'NATIONAL FINK'!!\n");
 		goto end;
 
 hamurabi_judgement_bad:
 		printf("Your heavy handed performance smacks of Nero and Ivan IV. The people "
-			"(remaining) find you an unpleasant ruler, and, frankly, hate your "
-			"guts!\n");
+		       "(remaining) find you an unpleasant ruler, and, frankly, hate your "
+		       "guts!\n");
 		goto end;
 
-hamurabi_judgement_fair:
-		{
-			uint16_t x = (uint16_t) (population * 0.8 * RANDOM(1));
-			printf("Your performance could have been somewhat better, but really wasn't "
-			    "too bad at all. %" PRIu16 " people would dearly like to see you "
-			    "assasinated but we all have our trivial problems.\n", x);
-		}
+hamurabi_judgement_fair : {
+	uint16_t x = (uint16_t)(population * 0.8 * RANDOM(1));
+	printf("Your performance could have been somewhat better, but really wasn't "
+	       "too bad at all. %" PRIu16 " people would dearly like to see you "
+	       "assasinated but we all have our trivial problems.\n",
+	       x);
+}
 		goto end;
 
 hamurabi_judgement_good:
 		printf("A fantastic performance!!! Charlemange, Disraeli, and Jefferson combined could "
-			"not have done better!\n");
+		       "not have done better!\n");
 		goto end;
 	}
 

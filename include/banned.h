@@ -13,13 +13,13 @@
 #define BANNED(func) sorry_##func##_is_a_banned_function
 
 #undef strcpy
-#define strcpy(x,y) BANNED(strcpy)
+#define strcpy(x, y) BANNED(strcpy)
 #undef strcat
-#define strcat(x,y) BANNED(strcat)
+#define strcat(x, y) BANNED(strcat)
 #undef strncpy
-#define strncpy(x,y,n) BANNED(strncpy)
+#define strncpy(x, y, n) BANNED(strncpy)
 #undef strncat
-#define strncat(x,y,n) BANNED(strncat)
+#define strncat(x, y, n) BANNED(strncat)
 
 #undef sprintf
 #undef vsprintf
@@ -27,8 +27,8 @@
 #define sprintf(...) BANNED(sprintf)
 #define vsprintf(...) BANNED(vsprintf)
 #else
-#define sprintf(buf,fmt,arg) BANNED(sprintf)
-#define vsprintf(buf,fmt,arg) BANNED(vsprintf)
+#define sprintf(buf, fmt, arg) BANNED(sprintf)
+#define vsprintf(buf, fmt, arg) BANNED(vsprintf)
 #endif
 
 #endif /* BANNED_H */

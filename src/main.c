@@ -8,7 +8,8 @@
  */
 #include "../include/hamurabi.h"
 
-int main() {
+int main()
+{
 
 	hamurabi_start();
 

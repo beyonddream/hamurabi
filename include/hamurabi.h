@@ -6,12 +6,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define RAND(n, x) do {	\
-	srand(time(NULL));	\
-	*(x) = RANDOM(n);	\
-} while (0);
+#define RAND(n, x)         \
+	do {                   \
+		srand(time(NULL)); \
+		*(x) = RANDOM(n);  \
+	} while (0);
 
-#define RANDOM(n) (uint16_t) (((double) rand() / (double) (RAND_MAX + 1u)) * (n))
+#define RANDOM(n) (uint16_t)(((double)rand() / (double)(RAND_MAX + 1u)) * (n))
 
 typedef struct city_of_sumeria city_of_sumeria_t;
 
@@ -64,8 +65,5 @@ uint16_t get_bushels_preserved(const city_of_sumeria_t *city);
  * get bushels destroyed
  */
 uint16_t get_bushels_destroyed(const city_of_sumeria_t *city);
-
-
-
 
 #endif /* HAMURABI_H */

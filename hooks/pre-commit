@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ -z "$(which clang-format)" ]
+then
+	echo "WARNING: clang-format was not found, cannot format files!"
+	exit 1
+fi
+
+IFS=$'\n'
+for filename in $(git diff --cached --name-only --diff-filter=AM);
+do
+	if [[ $filename == *.c ]] || [[ $filename == *.h ]]
+	then
+		echo "clang formatting $filename"
+        clang-format -style=file -i $(pwd)/$filename
+		git add $(pwd)/$filename
+	fi
+done
