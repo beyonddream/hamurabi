@@ -151,20 +151,20 @@ void report_summary(const city_of_sumeria_t *city)
 
 void hamurabi_start(void)
 {
-	uint16_t people_starved;            // people starved
-	uint16_t year;                      // year
-	uint16_t people_arrived;            // people came to the city
-	uint16_t acres_buy_or_sell;         // acres to buy/sell
-	uint16_t population;                // population of the city
-	uint16_t bushels_preserved;         // bushels preserved
-	uint16_t bushels_destroyed;         // bushels destroyed
-	uint16_t total_bushels;             // total bushels
-	uint16_t bushels_per_acre;          // bushels per acre
-	uint16_t acres_owned;               // acres owned by city
-	uint16_t random_event_value;        // random value
-	uint16_t population_starved_per_yr; // percentage of population starved per year
-	uint16_t people_died_total;         // total people who died
-	uint16_t acres_per_person;          // acres per person
+	uint16_t people_starved;
+	uint16_t year;                      
+	uint16_t people_arrived;            
+	uint16_t acres_buy_or_sell;         
+	uint16_t population;                
+	uint16_t bushels_preserved;         
+	uint16_t bushels_destroyed;         
+	uint16_t total_bushels;             
+	uint16_t bushels_per_acre;          
+	uint16_t acres_owned;               
+	uint16_t random_event_value;        
+	uint16_t population_starved_per_yr; 
+	uint16_t people_died_total;         
+	uint16_t acres_per_person;          
 
 	printf("Try your and at governing ancient sumeria,"
 	       "successfully for a 10-yr term of office.\n");
