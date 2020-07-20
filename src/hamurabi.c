@@ -19,6 +19,10 @@ enum city_event_type {
 	OK,
 	PLAGUE,
 	RAT_MENACE,
+	JUDGEMENT_GOOD,
+	JUDGEMENT_FAIR,
+	JUDGEMENT_BAD,
+	JUDGEMENT_WORSE,
 };
 
 city_of_sumeria_t *city_new(void)
@@ -198,6 +202,22 @@ city_event_type check_rat_menace(city_of_sumeria_t *city)
 	return OK;
 }
 
+city_event_type check_judgement(uint16_t population_starved_per_yr, uint16_t acres_per_person)
+{
+
+	if ((population_starved_per_yr > 33) || (acres_per_person < 7)) {
+		return JUDGEMENT_WORSE;
+	}
+	if ((population_starved_per_yr > 10) || (acres_per_person < 9)) {
+		return JUDGEMENT_BAD;
+	}
+	if ((population_starved_per_yr > 3) || (acres_per_person < 10)) {
+		return JUDGEMENT_FAIR;
+	}
+
+	return JUDGEMENT_GOOD;
+}
+
 void hamurabi_start(void)
 {
 	uint16_t people_starved;
@@ -342,16 +362,18 @@ bounty_harvest:
 			       people_died_total,
 			       acres_per_person);
 
-			if ((population_starved_per_yr > 33) || (acres_per_person < 7)) {
+			switch (check_judgement(population_starved_per_yr, acres_per_person)) {
+JUDGEMENT_WORSE:
 				goto hamurabi_judgement_worse;
-			}
-			if ((population_starved_per_yr > 10) || (acres_per_person < 9)) {
+JUDGEMENT_BAD:
 				goto hamurabi_judgement_bad;
-			}
-			if ((population_starved_per_yr > 3) || (acres_per_person < 10)) {
+JUDGEMENT_FAIR:
 				goto hamurabi_judgement_fair;
+JUDGEMENT_GOOD:
+				goto hamurabi_judgement_good;
+			default:
+				continue;
 			}
-			goto hamurabi_judgement_good;
 		}
 
 hamurabi_judgement_worse:
