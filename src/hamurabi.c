@@ -15,6 +15,11 @@ struct city_of_sumeria {
 	uint16_t population;
 };
 
+enum city_event_type {
+	OK,
+	PLAGUE,
+};
+
 city_of_sumeria_t *city_new(void)
 {
 	city_of_sumeria_t *city;
@@ -149,13 +154,23 @@ void report_summary(const city_of_sumeria_t *city)
 	return;
 }
 
+city_event_type set_plague(uint16_t acres_buy_or_sell, city_of_sumeria_t *city)
+{
+
+	if (acres_buy_or_sell <= 0) {
+		city->population = (uint16_t)(city->population / 2);
+		return PLAGUE;
+	}
+
+	return OK;
+}
+
 void hamurabi_start(void)
 {
 	uint16_t people_starved;
 	uint16_t year;
 	uint16_t people_arrived;
 	uint16_t acres_buy_or_sell;
-	uint16_t population;
 	uint16_t bushels_preserved;
 	uint16_t bushels_destroyed;
 	uint16_t total_bushels;
@@ -174,7 +189,6 @@ void hamurabi_start(void)
 	year = get_year(city);
 	people_arrived = get_people_arrived(city);
 	people_starved = get_people_starved(city);
-	population = get_population(city);
 	bushels_preserved = get_bushels_preserved(city);
 	bushels_destroyed = get_bushels_destroyed(city);
 	total_bushels = bushels_preserved + bushels_destroyed;
@@ -186,15 +200,14 @@ void hamurabi_start(void)
 		report_summary(city);
 
 		year += 1;
-		population += people_arrived;
+		city->population += people_arrived;
 
-		if (acres_buy_or_sell <= 0) {
+		if (set_plague(acres_buy_or_sell, city) == PLAGUE) {
 			printf("A horrible plague struck! "
 			       "Half the people died.\n");
-			population = (uint16_t)(population / 2);
 		}
 
-		printf("population is now %" PRIu16 "\n", population);
+		printf("population is now %" PRIu16 "\n", city->population);
 		printf("The city owns %" PRIu16 " acres.\n", acres_owned);
 		printf("You have harvested %" PRIu16 " bushels per acre.\n", bushels_per_acre);
 		printf("Rats ate %" PRIu16 " bushels.\n", bushels_destroyed);
@@ -269,10 +282,10 @@ plant_seeds:
 				hamurabi_illegal_bushels_input(bushels_preserved);
 				goto plant_seeds;
 			}
-			if (people_starved >= (10 * population)) {
+			if (people_starved >= (10 * city->population)) {
 				printf("But you have only %" PRIu16 " people to tend"
 				       " the fields. Now then, ",
-				       population);
+				       city->population);
 				goto plant_seeds;
 			}
 
@@ -289,26 +302,26 @@ bounty_harvest:
 
 			bushels_preserved += total_bushels - bushels_destroyed;
 			random_event_value = hamurabi_random_event_value();
-			people_arrived = (uint16_t)(random_event_value * ((20 * acres_owned) + bushels_preserved) / population / (100 + 1));
+			people_arrived = (uint16_t)(random_event_value * ((20 * acres_owned) + bushels_preserved) / city->population / (100 + 1));
 			random_event_value = (uint16_t)(acres_buy_or_sell / 20);
 			acres_buy_or_sell = (uint16_t)(10 * ((2 * RANDOM(1)) - 0.3));
-			if (population < random_event_value) {
+			if (city->population < random_event_value) {
 				people_starved = 0;
 				continue;
 			}
 
-			people_starved = population - random_event_value;
-			if (people_starved > (0.45 * population)) {
+			people_starved = city->population - random_event_value;
+			if (people_starved > (0.45 * city->population)) {
 				printf("You starved %" PRIu16 " people in one year\n", people_starved);
 				goto hamurabi_judgement_worse;
 			}
-			population_starved_per_yr = (((year - 1) * population_starved_per_yr) + (people_starved * 100 / population)) / year;
-			population = random_event_value;
+			population_starved_per_yr = (((year - 1) * population_starved_per_yr) + (people_starved * 100 / city->population)) / year;
+			city->population = random_event_value;
 			people_died_total += people_starved;
 			continue;
 		} else {
 
-			acres_per_person = acres_owned / population;
+			acres_per_person = acres_owned / city->population;
 
 			printf("In your 10-yr term of office, %" PRIu16 " percent of the "
 			       "population starved per year on average, i.e., A total of "
@@ -343,7 +356,7 @@ hamurabi_judgement_bad:
 		goto end;
 
 hamurabi_judgement_fair : {
-	uint16_t x = (uint16_t)(population * 0.8 * RANDOM(1));
+	uint16_t x = (uint16_t)(city->population * 0.8 * RANDOM(1));
 	printf("Your performance could have been somewhat better, but really wasn't "
 	       "too bad at all. %" PRIu16 " people would dearly like to see you "
 	       "assasinated but we all have our trivial problems.\n",

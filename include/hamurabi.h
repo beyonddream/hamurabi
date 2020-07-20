@@ -15,6 +15,7 @@
 #define RANDOM(n) (uint16_t)(((double)rand() / (double)(RAND_MAX + 1u)) * (n))
 
 typedef struct city_of_sumeria city_of_sumeria_t;
+typedef enum city_event_type city_event_type;
 
 /**
  * Start the game.
@@ -65,5 +66,10 @@ uint16_t get_bushels_preserved(const city_of_sumeria_t *city);
  * get bushels destroyed
  */
 uint16_t get_bushels_destroyed(const city_of_sumeria_t *city);
+
+/**
+ * check and induce plague based on the value of acres_buy_or_sell
+ */
+city_event_type set_plague(uint16_t acres_buy_or_sell, city_of_sumeria_t *city);
 
 #endif /* HAMURABI_H */
