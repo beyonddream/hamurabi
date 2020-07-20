@@ -141,8 +141,10 @@ uint16_t get_bushels_destroyed(const city_of_sumeria_t *city)
 	return city->bushels_destroyed;
 }
 
-void report_summary(const city_of_sumeria_t *city)
+void update_report_summary(uint16_t acres_buy_or_sell, city_of_sumeria_t *city)
 {
+	uint16_t total_bushels;
+	uint16_t acres_owned;
 
 	printf("Hamurabi: I beg to report to you, "
 	       "In year %" PRIu16 ", "
@@ -151,6 +153,23 @@ void report_summary(const city_of_sumeria_t *city)
 	       city->year,
 	       city->people_starved,
 	       city->people_arrived);
+
+	city->year += 1;
+	city->population += city->people_arrived;
+
+	if (set_plague(acres_buy_or_sell, city) == PLAGUE) {
+		printf("A horrible plague struck! "
+		       "Half the people died.\n");
+	}
+
+	total_bushels = city->bushels_preserved + city->bushels_destroyed;
+	acres_owned = total_bushels / city->bushels_per_acre;
+
+	printf("population is now %" PRIu16 "\n", city->population);
+	printf("The city owns %" PRIu16 " acres.\n", acres_owned);
+	printf("You have harvested %" PRIu16 " bushels per acre.\n", city->bushels_per_acre);
+	printf("Rats ate %" PRIu16 " bushels.\n", city->bushels_destroyed);
+	printf("You now have %" PRIu16 " bushels in store.\n", city->bushels_preserved);
 
 	return;
 }
@@ -202,21 +221,8 @@ void hamurabi_start(void)
 	acres_buy_or_sell = 1;
 
 	for (;;) {
-		report_summary(city);
 
-		city->year += 1;
-		city->population += people_arrived;
-
-		if (set_plague(acres_buy_or_sell, city) == PLAGUE) {
-			printf("A horrible plague struck! "
-			       "Half the people died.\n");
-		}
-
-		printf("population is now %" PRIu16 "\n", city->population);
-		printf("The city owns %" PRIu16 " acres.\n", acres_owned);
-		printf("You have harvested %" PRIu16 " bushels per acre.\n", bushels_per_acre);
-		printf("Rats ate %" PRIu16 " bushels.\n", city->bushels_destroyed);
-		printf("You now have %" PRIu16 " bushels in store.\n", city->bushels_preserved);
+		update_report_summary(acres_buy_or_sell, city);
 
 		if (city->year < 11) {
 			RAND(10, &random_event_value);
