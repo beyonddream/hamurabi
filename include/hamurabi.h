@@ -80,6 +80,9 @@ city_event_type check_rat_menace(city_of_sumeria_t *city);
 /**
  * check and return the judgement type
  */
-city_event_type check_judgement(uint16_t population_starved_per_yr, uint16_t acres_per_person);
+city_event_type check_judgement(city_of_sumeria_t *city,
+                                uint16_t population_starved_per_yr,
+                                uint16_t people_died_total,
+                                uint16_t acres_owned);
 
 #endif /* HAMURABI_H */

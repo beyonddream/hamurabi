@@ -202,8 +202,20 @@ city_event_type check_rat_menace(city_of_sumeria_t *city)
 	return OK;
 }
 
-city_event_type check_judgement(uint16_t population_starved_per_yr, uint16_t acres_per_person)
+city_event_type check_judgement(city_of_sumeria_t *city,
+                                uint16_t population_starved_per_yr,
+                                uint16_t people_died_total,
+                                uint16_t acres_owned)
 {
+	uint16_t acres_per_person = acres_owned / city->population;
+
+	printf("In your 10-yr term of office, %" PRIu16 " percent of the "
+	       "population starved per year on average, i.e., A total of "
+	       "%" PRIu16 " people died!! You started with 10 acres per person "
+	       "and ended with %" PRIu16 " acres per person.\n",
+	       population_starved_per_yr,
+	       people_died_total,
+	       acres_per_person);
 
 	if ((population_starved_per_yr > 33) || (acres_per_person < 7)) {
 		return JUDGEMENT_WORSE;
@@ -362,7 +374,7 @@ bounty_harvest:
 			       people_died_total,
 			       acres_per_person);
 
-			switch (check_judgement(population_starved_per_yr, acres_per_person)) {
+			switch (check_judgement(city, population_starved_per_yr, people_died_total, acres_owned)) {
 JUDGEMENT_WORSE:
 				goto hamurabi_judgement_worse;
 JUDGEMENT_BAD:
