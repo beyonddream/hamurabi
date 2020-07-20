@@ -199,7 +199,7 @@ void hamurabi_start(void)
 	for (;;) {
 		report_summary(city);
 
-		year += 1;
+		city->year += 1;
 		city->population += people_arrived;
 
 		if (set_plague(acres_buy_or_sell, city) == PLAGUE) {
@@ -213,7 +213,7 @@ void hamurabi_start(void)
 		printf("Rats ate %" PRIu16 " bushels.\n", bushels_destroyed);
 		printf("You now have %" PRIu16 " bushels in store.\n", bushels_preserved);
 
-		if (year < 11) {
+		if (city->year < 11) {
 			RAND(10, &random_event_value);
 			bushels_per_acre = random_event_value + 17;
 			printf("Land is trading at %" PRIu16 " bushels per acre.\n", bushels_per_acre);
@@ -315,7 +315,8 @@ bounty_harvest:
 				printf("You starved %" PRIu16 " people in one year\n", people_starved);
 				goto hamurabi_judgement_worse;
 			}
-			population_starved_per_yr = (((year - 1) * population_starved_per_yr) + (people_starved * 100 / city->population)) / year;
+			population_starved_per_yr =
+			    (((city->year - 1) * population_starved_per_yr) + (people_starved * 100 / city->population)) / city->year;
 			city->population = random_event_value;
 			people_died_total += people_starved;
 			continue;
