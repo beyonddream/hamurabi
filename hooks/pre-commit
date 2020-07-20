@@ -14,7 +14,7 @@ do
         if [[ $filename == *.c ]] || [[ $filename == *.h ]]
         then
                 echo "clang formatting $filename"
-                clang-format -style=file -i $fielname
+                clang-format -style=file -i $(pwd)/$fielname
                 git add $(pwd)/$filename
         fi
 done
