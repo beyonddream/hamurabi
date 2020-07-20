@@ -196,8 +196,6 @@ void hamurabi_start(void)
 	uint16_t people_starved;
 	uint16_t people_arrived;
 	uint16_t acres_buy_or_sell;
-	uint16_t bushels_preserved;
-	uint16_t bushels_destroyed;
 	uint16_t total_bushels;
 	uint16_t bushels_per_acre;
 	uint16_t acres_owned;
@@ -213,8 +211,6 @@ void hamurabi_start(void)
 
 	people_arrived = get_people_arrived(city);
 	people_starved = get_people_starved(city);
-	bushels_preserved = get_bushels_preserved(city);
-	bushels_destroyed = get_bushels_destroyed(city);
 	total_bushels = city->bushels_preserved + city->bushels_destroyed;
 	bushels_per_acre = get_bushels_per_acre(city);
 	acres_owned = total_bushels / bushels_per_acre;
