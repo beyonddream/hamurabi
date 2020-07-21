@@ -230,6 +230,47 @@ city_event_type check_judgement(city_of_sumeria_t *city,
 	return JUDGEMENT_GOOD;
 }
 
+void print_judgement_worse_message()
+{
+
+	printf("Due to this extreme mismanagement you have not only been impeached "
+	       "and thrown out of office but you have also been declared "
+	       "'NATIONAL FINK'!!\n");
+
+	return;
+}
+
+void print_judgement_bad_message()
+{
+
+	printf("Your heavy handed performance smacks of Nero and Ivan IV. The people "
+	       "(remaining) find you an unpleasant ruler, and, frankly, hate your "
+	       "guts!\n");
+
+	return;
+}
+
+void print_judgement_fair_message(uint16_t population)
+{
+	uint16_t x = (uint16_t)(population * 0.8 * RANDOM(1));
+
+	printf("Your performance could have been somewhat better, but really wasn't "
+	       "too bad at all. %" PRIu16 " people would dearly like to see you "
+	       "assasinated but we all have our trivial problems.\n",
+	       x);
+
+	return;
+}
+
+void print_judgement_good_message()
+{
+
+	printf("A fantastic performance!!! Charlemange, Disraeli, and Jefferson combined could "
+	       "not have done better!\n");
+
+	return;
+}
+
 void hamurabi_start(void)
 {
 	uint16_t people_starved;
@@ -355,7 +396,8 @@ bounty_harvest:
 			people_starved = city->population - random_event_value;
 			if (people_starved > (0.45 * city->population)) {
 				printf("You starved %" PRIu16 " people in one year\n", people_starved);
-				goto hamurabi_judgement_worse;
+				print_judgement_worse_message();
+				goto end;
 			}
 			population_starved_per_yr =
 			    (((city->year - 1) * population_starved_per_yr) + (people_starved * 100 / city->population)) / city->year;
@@ -366,45 +408,22 @@ bounty_harvest:
 
 			switch (check_judgement(city, population_starved_per_yr, people_died_total, acres_owned)) {
 JUDGEMENT_WORSE:
-				goto hamurabi_judgement_worse;
+				print_judgement_worse_message();
+				goto end;
 JUDGEMENT_BAD:
-				goto hamurabi_judgement_bad;
+				print_judgement_bad_message();
+				goto end;
 JUDGEMENT_FAIR:
-				goto hamurabi_judgement_fair;
+				print_judgement_fair_message(city->population);
+				goto end;
 JUDGEMENT_GOOD:
-				goto hamurabi_judgement_good;
+				print_judgement_good_message();
+				goto end;
 			default:
 				continue;
 			}
 		}
-
-hamurabi_judgement_worse:
-		printf("Due to this extreme mismanagement you have not only been impeached "
-		       "and thrown out of office but you have also been declared "
-		       "'NATIONAL FINK'!!\n");
-		goto end;
-
-hamurabi_judgement_bad:
-		printf("Your heavy handed performance smacks of Nero and Ivan IV. The people "
-		       "(remaining) find you an unpleasant ruler, and, frankly, hate your "
-		       "guts!\n");
-		goto end;
-
-hamurabi_judgement_fair : {
-	uint16_t x = (uint16_t)(city->population * 0.8 * RANDOM(1));
-	printf("Your performance could have been somewhat better, but really wasn't "
-	       "too bad at all. %" PRIu16 " people would dearly like to see you "
-	       "assasinated but we all have our trivial problems.\n",
-	       x);
-}
-		goto end;
-
-hamurabi_judgement_good:
-		printf("A fantastic performance!!! Charlemange, Disraeli, and Jefferson combined could "
-		       "not have done better!\n");
-		goto end;
 	}
-
 end:
 	hamurabi_end();
 
