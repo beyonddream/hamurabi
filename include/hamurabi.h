@@ -73,7 +73,7 @@ uint16_t get_bushels_destroyed(const city_of_sumeria_t *city);
 city_event_type check_plague(uint16_t acres_buy_or_sell, city_of_sumeria_t *city);
 
 /**
- * check and include rate menaced that destroy bushels
+ * check and include rat menace that destroy bushels
  */
 city_event_type check_rat_menace(city_of_sumeria_t *city);
 
