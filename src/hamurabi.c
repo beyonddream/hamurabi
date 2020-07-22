@@ -25,7 +25,7 @@ enum city_event_type {
 	SELL_ACRES,
 	FEED_PEOPLE,
 	PLANT_SEEDS,
-	BOUNTY_HARVEST,
+	HARVEST_BOUNTY,
 	JUDGEMENT_GOOD,
 	JUDGEMENT_FAIR,
 	JUDGEMENT_BAD,
@@ -365,7 +365,7 @@ city_event_type plant_seeds(city_of_sumeria_t *city)
 
 	if (acres_to_plant == 0) {
 		city->acres_planted_with_seed = acres_to_plant;
-		return BOUNTY_HARVEST;
+		return HARVEST_BOUNTY;
 	}
 
 	if (acres_to_plant > city->acres_owned) {
@@ -500,14 +500,14 @@ plant_seeds:
 			switch (plant_seeds(city)) {
 			case PLANT_SEEDS:
 				goto plant_seeds;
-			case BOUNTY_HARVEST:
-				goto bounty_harvest;
+			case HARVEST_BOUNTY:
+				goto harvest_bounty;
 			case UNKNOWN:
 				goto end;
 			default:
 				break;
 			}
-bounty_harvest:
+harvest_bounty:
 			switch (harvest_bounty(city, &acres_buy_or_sell, &population_starved_per_yr, &people_died_total)) {
 			case UNKNOWN:
 				goto end;
