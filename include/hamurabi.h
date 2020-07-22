@@ -85,12 +85,12 @@ city_event_type check_judgement(city_of_sumeria_t *city, uint16_t population_sta
 /**
  * initiate buying of acres
  */
-city_event_type buy_acres(city_of_sumeria_t *city);
+city_event_type buy_acres(city_of_sumeria_t *city, uint16_t *acres_buy_or_sell);
 
 /**
  * initiate selling of acres
  */
-city_event_type sell_acres(city_of_sumeria_t *city);
+city_event_type sell_acres(city_of_sumeria_t *city, uint16_t *acres_buy_or_sell);
 
 /**
  * initiate feeding of people
@@ -105,6 +105,9 @@ city_event_type plant_seeds(city_of_sumeria_t *city);
 /**
  * initiate harvesting the bounty
  */
-city_event_type harvest_bounty(city_of_sumeria_t *city);
+city_event_type harvest_bounty(city_of_sumeria_t *city,
+                               uint16_t *acres_buy_or_sell,
+                               uint16_t *population_starved_per_yr,
+                               uint16_t *people_died_total);
 
 #endif /* HAMURABI_H */
