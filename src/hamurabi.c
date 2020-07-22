@@ -14,6 +14,7 @@ struct city_of_sumeria {
 	uint16_t people_arrived;
 	uint16_t population;
 	uint16_t acres_owned;
+	uint16_t acres_planted_with_seed;
 };
 
 enum city_event_type {
@@ -350,6 +351,40 @@ city_event_type feed_people(city_of_sumeria_t *city)
 
 city_event_type plant_seeds(city_of_sumeria_t *city)
 {
+	uint16_t acres_to_plant;
+
+	printf("How many acres do you wish to plant with seed?");
+	scanf("%" PRIu16, &acres_to_plant);
+
+	if (acres_to_plant < 0) {
+		hamurabi_illegal_input();
+		return UNKNOWN;
+	}
+
+	if (acres_to_plant == 0) {
+		city->acres_planted_with_seed = acres_to_plant;
+		return BOUNTY_HARVEST;
+	}
+
+	if (acres_to_plant > city->acres_owned) {
+		hamurabi_illegal_acres_input(city->acres_owned);
+		return PLANT_SEEDS;
+	}
+
+	if (((uint16_t)(acres_to_plant / 2)) >= city->bushels_preserved) {
+		hamurabi_illegal_bushels_input(city->bushels_preserved);
+		return PLANT_SEEDS;
+	}
+
+	if (acres_to_plant >= (10 * city->population)) {
+		printf("But you have only %" PRIu16 " people to tend"
+		       " the fields. Now then, ",
+		       city->population);
+		return PLANT_SEEDS;
+	}
+
+	city->bushels_preserved -= ((uint16_t)(acres_to_plant / 2));
+	city->acres_planted_with_seed = acres_to_plant;
 
 	return NONE;
 }
@@ -425,34 +460,19 @@ feed_people:
 				break;
 			}
 plant_seeds:
-			printf("How many acres do you wish to plant with seed?");
-			scanf("%" PRIu16, &people_starved);
-			if (people_starved < 0) {
-				hamurabi_illegal_input();
-				goto end;
-			}
-			if (people_starved == 0) {
+			switch (plant_seeds(city)) {
+			case PLANT_SEEDS:
+				goto plant_seeds;
+			case BOUNTY_HARVEST:
 				goto bounty_harvest;
+			case UNKNOWN:
+				goto end;
+			default:
+				break;
 			}
-			if (people_starved > city->acres_owned) {
-				hamurabi_illegal_acres_input(city->acres_owned);
-				goto plant_seeds;
-			}
-			if (((uint16_t)(people_starved / 2)) >= city->bushels_preserved) {
-				hamurabi_illegal_bushels_input(city->bushels_preserved);
-				goto plant_seeds;
-			}
-			if (people_starved >= (10 * city->population)) {
-				printf("But you have only %" PRIu16 " people to tend"
-				       " the fields. Now then, ",
-				       city->population);
-				goto plant_seeds;
-			}
-
-			city->bushels_preserved -= ((uint16_t)(people_starved / 2));
 bounty_harvest:
 			bushels_per_acre = hamurabi_random_event_value();
-			total_bushels = people_starved * bushels_per_acre;
+			total_bushels = city->acres_planted_with_seed * bushels_per_acre;
 			city->bushels_preserved += total_bushels;
 			if (check_rat_menace(city) == RAT_MENACE) {
 				city->bushels_preserved -= city->bushels_destroyed;
@@ -464,20 +484,20 @@ bounty_harvest:
 			random_event_value = (uint16_t)(acres_buy_or_sell / 20);
 			acres_buy_or_sell = (uint16_t)(10 * ((2 * RANDOM(1)) - 0.3));
 			if (city->population < random_event_value) {
-				people_starved = 0;
+				city->people_starved = 0;
 				continue;
 			}
 
-			people_starved = city->population - random_event_value;
-			if (people_starved > (0.45 * city->population)) {
-				printf("You starved %" PRIu16 " people in one year\n", people_starved);
+			city->people_starved = city->population - random_event_value;
+			if (city->people_starved > (0.45 * city->population)) {
+				printf("You starved %" PRIu16 " people in one year\n", city->people_starved);
 				print_judgement_worse_message();
 				goto end;
 			}
 			population_starved_per_yr =
-			    (((city->year - 1) * population_starved_per_yr) + (people_starved * 100 / city->population)) / city->year;
+			    (((city->year - 1) * population_starved_per_yr) + (city->people_starved * 100 / city->population)) / city->year;
 			city->population = random_event_value;
-			people_died_total += people_starved;
+			people_died_total += city->people_starved;
 			continue;
 		} else {
 
