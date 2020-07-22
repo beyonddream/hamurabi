@@ -327,8 +327,25 @@ city_event_type sell_acres(city_of_sumeria_t *city)
 
 city_event_type feed_people(city_of_sumeria_t *city)
 {
+	uint16_t bushels_to_feed_people;
+	uint16_t bushels_preserved = get_bushels_preserved(city);
 
-	return NONE;
+	printf("How many bushels do you wish to feed your people?");
+	scanf("%" PRIu16, &bushels_to_feed_people);
+
+	if (bushels_to_feed_people < 0) {
+		hamurabi_illegal_input();
+		return UNKNOWN;
+	}
+
+	if (bushels_to_feed_people > bushels_preserved) {
+		hamurabi_illegal_bushels_input(bushels_preserved);
+		return FEED_PEOPLE;
+	}
+
+	city->bushels_preserved -= bushels_to_feed_people;
+
+	return PLANT_SEEDS;
 }
 
 city_event_type plant_seeds(city_of_sumeria_t *city)
@@ -397,19 +414,16 @@ sell_acres:
 				break;
 			}
 feed_people:
-			printf("How many bushels do you wish to feed your people?");
-			scanf("%" PRIu16, &acres_buy_or_sell);
-			if (acres_buy_or_sell < 0) {
-				hamurabi_illegal_input();
-				goto end;
-			}
-			if (acres_buy_or_sell > city->bushels_preserved) {
-				hamurabi_illegal_bushels_input(city->bushels_preserved);
+			switch (feed_people(city)) {
+			case PLANT_SEEDS:
+				goto plant_seeds;
+			case FEED_PEOPLE:
 				goto feed_people;
+			case UNKNOWN:
+				goto end;
+			default:
+				break;
 			}
-
-			city->bushels_preserved -= acres_buy_or_sell;
-			random_event_value = 1;
 plant_seeds:
 			printf("How many acres do you wish to plant with seed?");
 			scanf("%" PRIu16, &people_starved);
