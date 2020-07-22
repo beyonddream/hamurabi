@@ -357,12 +357,12 @@ void hamurabi_start(void)
 
 buy_acres:
 			switch (buy_acres(city)) {
-BUY_ACRES:
+			case BUY_ACRES:
 				goto buy_acres;
-FEED_PEOPLE:
+			case FEED_PEOPLE:
 				random_event_value = 0;
 				goto feed_people;
-UNKNOWN:
+			case UNKNOWN:
 				goto end;
 			default:
 				break;
@@ -454,16 +454,16 @@ bounty_harvest:
 		} else {
 
 			switch (check_judgement(city, population_starved_per_yr, people_died_total)) {
-JUDGEMENT_WORSE:
+			case JUDGEMENT_WORSE:
 				print_judgement_worse_message();
 				goto end;
-JUDGEMENT_BAD:
+			case JUDGEMENT_BAD:
 				print_judgement_bad_message();
 				goto end;
-JUDGEMENT_FAIR:
+			case JUDGEMENT_FAIR:
 				print_judgement_fair_message(city->population);
 				goto end;
-JUDGEMENT_GOOD:
+			case JUDGEMENT_GOOD:
 				print_judgement_good_message();
 				goto end;
 			default:
