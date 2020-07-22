@@ -80,9 +80,31 @@ city_event_type check_rat_menace(city_of_sumeria_t *city);
 /**
  * check and return the judgement type
  */
-city_event_type check_judgement(city_of_sumeria_t *city,
-                                uint16_t population_starved_per_yr,
-                                uint16_t people_died_total,
-                                uint16_t acres_owned);
+city_event_type check_judgement(city_of_sumeria_t *city, uint16_t population_starved_per_yr, uint16_t people_died_total);
+
+/**
+ * initiate buying of acres
+ */
+city_event_type buy_acres(city_of_sumeria_t *city);
+
+/**
+ * initiate selling of acres
+ */
+city_event_type sell_acres(city_of_sumeria_t *city);
+
+/**
+ * initiate feeding of people
+ */
+city_event_type feed_people(city_of_sumeria_t *city);
+
+/**
+ * initiate planting of seeds
+ */
+city_event_type plant_seeds(city_of_sumeria_t *city);
+
+/**
+ * initiate harvesting the bounty
+ */
+city_event_type harvest_bounty(city_of_sumeria_t *city);
 
 #endif /* HAMURABI_H */
