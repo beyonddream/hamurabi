@@ -434,14 +434,10 @@ city_event_type harvest_bounty(city_of_sumeria_t *city,
 
 void hamurabi_start(void)
 {
-	uint16_t people_starved;
 	uint16_t acres_buy_or_sell;
-	uint16_t total_bushels;
-	uint16_t bushels_per_acre;
 	uint16_t random_event_value;
 	uint16_t population_starved_per_yr;
 	uint16_t people_died_total;
-	uint16_t acres_per_person;
 
 	printf("Try your and at governing ancient sumeria,"
 	       "successfully for a 10-yr term of office.\n");
@@ -451,17 +447,12 @@ void hamurabi_start(void)
 
 	for (;;) {
 
-		people_starved = get_people_starved(city);
-		total_bushels = get_bushels_preserved(city) + get_bushels_destroyed(city);
-		bushels_per_acre = get_bushels_per_acre(city);
-		city->acres_owned = total_bushels / bushels_per_acre;
-
 		update_report_summary(acres_buy_or_sell, city);
 
 		if (city->year < 11) {
 			RAND(10, &random_event_value);
-			bushels_per_acre = random_event_value + 17;
-			printf("Land is trading at %" PRIu16 " bushels per acre.\n", bushels_per_acre);
+			city->bushels_per_acre = random_event_value + 17;
+			printf("Land is trading at %" PRIu16 " bushels per acre.\n", city->bushels_per_acre);
 
 buy_acres:
 			switch (buy_acres(city, &acres_buy_or_sell)) {
