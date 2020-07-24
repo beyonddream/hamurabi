@@ -4,7 +4,7 @@ Hamurabi game implemented in C
 # Dependencies
 
 1. CMake >= 3.17 for building.
-2. Check for running unit tests.
+2. Check 0.15.1 for running unit tests.
 
 Tested with clang version 11.0 compiler.
 
