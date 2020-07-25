@@ -8,6 +8,20 @@ Hamurabi game implemented in C
 
 Tested with clang version 11.0 compiler.
 
+# Building
+
+1. `./br`
+
+# Testing
+
+1. Build
+1. go to build/
+2. run `ctest`
+
+# Running the Game
+
+1. `./br r`
+
 # Game details
 
 player - ancient babylonian king Hammurabi.  
