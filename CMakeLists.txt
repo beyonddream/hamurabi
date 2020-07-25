@@ -31,12 +31,12 @@ add_executable(hamurabi
         )
 
 set(CHECK_INCLUDE_DIR "/usr/local/Cellar/check/0.15.1/include")
-set(CHECK_LIBRARIES "/usr/local/Cellar/check/0.15.1/lib/libcheck.a")
 find_package(Check REQUIRED)
 
 enable_testing()
 include(CheckTest)
 #include_directories(${CHECK_INCLUDE_DIR})
+set(CHECK_LIBRARIES "/usr/local/Cellar/check/0.15.1/lib/libcheck.a")
 set(LIBS
         ${CHECK_LIBRARIES}
 )
