@@ -305,7 +305,6 @@ city_event_type buy_acres(city_of_sumeria_t *city, uint16_t *acres_buy_or_sell)
 city_event_type sell_acres(city_of_sumeria_t *city, uint16_t *acres_buy_or_sell)
 {
 	uint16_t acres_to_sell;
-	uint16_t bushels_preserved = get_bushels_preserved(city);
 	uint16_t bushels_per_acre = get_bushels_per_acre(city);
 
 	printf("How many acres do you wish to sell?");
@@ -528,8 +527,6 @@ harvest_bounty:
 	}
 end:
 	hamurabi_end();
-
-cleanup:
 	city_destroy(city);
 
 	return;
