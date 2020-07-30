@@ -12,7 +12,11 @@
 		*(x) = RANDOM(n);  \
 	} while (0);
 
+#ifdef _HAMURABI_TEST
+#define RANDOM(n) RANDOM_TEST(n)
+#else
 #define RANDOM(n) (uint16_t)(((double)rand() / (double)(RAND_MAX + 1u)) * (n))
+#endif
 
 typedef struct city_of_sumeria city_of_sumeria_t;
 typedef enum city_event_type city_event_type;

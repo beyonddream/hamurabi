@@ -26,6 +26,9 @@ make --no-print-directory -j$(($PROCESSORS * 2))
 if [ "$1" = "r" ]
 then
         ./hamurabi
+elif [ "$1" = "t" ]
+then
+    ctest -j8
 fi
 
 popd

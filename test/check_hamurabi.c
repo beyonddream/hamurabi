@@ -1,11 +1,15 @@
+#define _HAMURABI_TEST
 #include "../include/hamurabi.h"
 #include <check.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
+
 START_TEST(test_init)
 {
-	ck_assert(true);
+#define RANDOM_TEST(n) n
+	ck_assert_int_eq(RANDOM(3), 3);
+#undef RANDOM_TEST
 }
 END_TEST
 
