@@ -6,10 +6,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define RAND(n, x)         \
-	do {                   \
-		srand(time(NULL)); \
-		*(x) = RANDOM(n);  \
+#define RAND(n, x)			\
+	do {				\
+		srand(time(NULL));	\
+		*(x) = RANDOM(n);	\
 	} while (0);
 
 #ifdef _HAMURABI_TEST
