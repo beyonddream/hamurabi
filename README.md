@@ -62,6 +62,10 @@ The game ends if any of the below condition satisfies:
 3. atleast 45% of population starve in a round
 
 # Development
-In your local development, you can run ctags on the project:
+In your local development, you can run ctags on the project to make it easy to jump around functions:
 
 1. `ctags -R -a .`
+
+# TODO
+- [ ] Add tests
+- [ ] Add web interface

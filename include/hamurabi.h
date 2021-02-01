@@ -6,10 +6,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define RAND(n, x)			\
-	do {				\
-		srand(time(NULL));	\
-		*(x) = RANDOM(n);	\
+#define RAND(n, x)         \
+	do {                   \
+		srand(time(NULL)); \
+		*(x) = RANDOM(n);  \
 	} while (0);
 
 #ifdef _HAMURABI_TEST
@@ -17,6 +17,22 @@
 #else
 #define RANDOM(n) (uint16_t)(((double)rand() / (double)(RAND_MAX + 1u)) * (n))
 #endif
+
+enum city_event_type {
+	NONE,
+	PLAGUE,
+	RAT_MENACE,
+	BUY_ACRES,
+	SELL_ACRES,
+	FEED_PEOPLE,
+	PLANT_SEEDS,
+	HARVEST_BOUNTY,
+	JUDGEMENT_GOOD,
+	JUDGEMENT_FAIR,
+	JUDGEMENT_BAD,
+	JUDGEMENT_WORSE,
+	UNKNOWN, /* unknown event type is considered error */
+};
 
 typedef struct city_of_sumeria city_of_sumeria_t;
 typedef enum city_event_type city_event_type;
@@ -99,7 +115,7 @@ city_event_type sell_acres(city_of_sumeria_t *city, uint16_t *acres_buy_or_sell)
 /**
  * initiate feeding of people
  */
-city_event_type feed_people(city_of_sumeria_t *city);
+city_event_type feed_people(city_of_sumeria_t *city, uint16_t *bushels_to_feed_people);
 
 /**
  * initiate planting of seeds
