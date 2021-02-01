@@ -54,3 +54,6 @@ dkms.conf
 # cmake junk
 build/
 Testing/
+
+# ctags
+tags

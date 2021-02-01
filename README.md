@@ -60,3 +60,8 @@ The game ends if any of the below condition satisfies:
 1. after 10 rounds
 2. entire population of city dies
 3. atleast 45% of population starve in a round
+
+# Development
+In your local development, you can run ctags on the project:
+
+1. `ctags -R -a .`
