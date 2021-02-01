@@ -24,6 +24,8 @@ Tested with clang version 11.0 compiler.
 
 # Game details
 
+Original game source - doc/HMRABI.txt
+
 player - ancient babylonian king Hammurabi.  
 resources - people, acres of land, bushels of grain.  
 rounds - 10 (unit = year)
