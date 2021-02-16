@@ -2,7 +2,13 @@
 
 if [ -z "$(which clang-format)" ]
 then
-    brew install clang-format
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+            brew install clang-format
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+            sudo apt install clang-format
+    else
+            echo "Unsupported OS!"
+    fi
 fi
 
 DEST=.git/hooks/pre-commit

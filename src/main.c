@@ -2,7 +2,7 @@
  * Hamurabi game - ported from qbasic.
  * See doc/HMRABI.txt
  *
- * author: Arun S Kumar.
+ * author: beyonddream
  * License: See LICENSE file.
  *
  */
