@@ -267,7 +267,7 @@ city_event_type buy_acres(city_of_sumeria_t *city, uint16_t *acres_buy_or_sell)
 	printf("How many acres do you wish to buy?");
 	scanf("%" PRIu16, acres_buy_or_sell);
 
-	if (acres_buy_or_sell < 0) {
+	if (*acres_buy_or_sell < 0) {
 		hamurabi_illegal_input();
 		return UNKNOWN;
 	}
@@ -428,6 +428,8 @@ void hamurabi_start(void)
 
 	city_of_sumeria_t *city = city_new();
 	acres_buy_or_sell = 1;
+	population_starved_per_yr = 0;
+	people_died_total = 0;
 
 	for (;;) {
 
