@@ -3,24 +3,23 @@ Hamurabi game implemented in C
 
 # Dependencies
 
+Tested only on Macos with clang version 11.0 compiler and below dependencies.
+
 1. CMake >= 3.17 for building.
 2. Check 0.15.1 for running unit tests.
 
-Tested with clang version 11.0 compiler.
-
 # Building
 
-1. `./br`
+1. `./build.sh`
 
 # Testing
 
-1. Build
-1. go to build/
-2. run `ctest`
+1. `./build.sh`
+2. `./build.sh t`
 
 # Running the Game
 
-1. `./br r`
+1. `./build.sh r`
 
 # Game details
 
@@ -67,7 +66,3 @@ The game ends if any of the below condition satisfies:
 In your local development, you can run ctags on the project to make it easy to jump around functions:
 
 1. `ctags -R -a .`
-
-# TODO
-- [ ] Add tests
-- [ ] Add web interface
