@@ -1,5 +1,5 @@
 all:
-	@./br
+	@./build.sh r
 .PHONY: all
 
 clean:
