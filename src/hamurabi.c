@@ -392,7 +392,15 @@ city_event_type harvest_bounty(city_of_sumeria_t *city,
 	city->people_arrived = random_event_value * ((20 * city->acres_owned) + city->bushels_preserved) / city->population / (100 + 1);
 
 	random_event_value = *acres_buy_or_sell / 20;
-	*acres_buy_or_sell = 10 * ((2 * RANDOM(1)) - 0.3);
+
+	{
+		uint16_t another_random_event_value = RANDOM(1);
+		if ((another_random_event_value * 20) <= 3) {
+			*acres_buy_or_sell = 0;
+		} else {
+			*acres_buy_or_sell = (another_random_event_value * 20) - 3;
+		}
+	}
 
 	if (city->population < random_event_value) {
 		city->people_starved = 0;
