@@ -21,21 +21,21 @@ city_of_sumeria_t *city_new(void)
 {
 	city_of_sumeria_t *city;
 
-	city = (city_of_sumeria_t *)malloc(sizeof(city_of_sumeria_t));
+	city = malloc(sizeof(city_of_sumeria_t));
 	if (city == NULL) {
 		printf("Unable to intialize city. Exiting...\n");
 		exit(EXIT_FAILURE);
 	}
 
-	memset((void *)city, 0, sizeof(city_of_sumeria_t));
+	memset(city, 0, sizeof(city_of_sumeria_t));
 
-	city->bushels_preserved = (uint16_t)2800;
-	city->bushels_destroyed = (uint16_t)200;
-	city->bushels_per_acre = (uint16_t)3;
-	city->year = (uint16_t)1;
-	city->people_starved = (uint16_t)0;
-	city->people_arrived = (uint16_t)5;
-	city->population = (uint16_t)95;
+	city->bushels_preserved = 2800;
+	city->bushels_destroyed = 200;
+	city->bushels_per_acre = 3;
+	city->year = 1;
+	city->people_starved = 0;
+	city->people_arrived = 5;
+	city->population = 95;
 	city->acres_owned = (get_bushels_preserved(city) + get_bushels_destroyed(city)) / get_bushels_per_acre(city);
 
 	return city;
@@ -44,7 +44,7 @@ city_of_sumeria_t *city_new(void)
 void city_destroy(city_of_sumeria_t *city_of_sumeria)
 {
 
-	free((void *)city_of_sumeria);
+	free(city_of_sumeria);
 	return;
 }
 
@@ -170,7 +170,7 @@ city_event_type check_plague(uint16_t acres_buy_or_sell, city_of_sumeria_t *city
 {
 
 	if (acres_buy_or_sell <= 0) {
-		city->population = (uint16_t)(city->population / 2);
+		city->population = city->population / 2;
 		return PLAGUE;
 	}
 
@@ -185,7 +185,7 @@ city_event_type check_rat_menace(city_of_sumeria_t *city)
 	random_event_value = hamurabi_random_event_value();
 
 	if (((uint16_t)(random_event_value / 2.0)) == (random_event_value / 2.0)) {
-		city->bushels_destroyed = (uint16_t)(city->bushels_preserved / random_event_value);
+		city->bushels_destroyed = city->bushels_preserved / random_event_value;
 		return RAT_MENACE;
 	}
 
@@ -240,7 +240,7 @@ void print_judgement_bad_message()
 
 void print_judgement_fair_message(uint16_t population)
 {
-	uint16_t x = (uint16_t)(population * 0.8 * RANDOM(1));
+	uint16_t x = population * 0.8 * RANDOM(1);
 
 	printf("Your performance could have been somewhat better, but really wasn't "
 	       "too bad at all. %" PRIu16 " people would dearly like to see you "
@@ -354,7 +354,7 @@ city_event_type plant_seeds(city_of_sumeria_t *city)
 		return PLANT_SEEDS;
 	}
 
-	if (((uint16_t)(*acres_to_plant / 2)) >= city->bushels_preserved) {
+	if ((*acres_to_plant / 2) >= city->bushels_preserved) {
 		hamurabi_illegal_bushels_input(city->bushels_preserved);
 		return PLANT_SEEDS;
 	}
@@ -366,7 +366,7 @@ city_event_type plant_seeds(city_of_sumeria_t *city)
 		return PLANT_SEEDS;
 	}
 
-	city->bushels_preserved -= ((uint16_t)(*acres_to_plant / 2));
+	city->bushels_preserved -= *acres_to_plant / 2;
 	city->acres_planted_with_seed = *acres_to_plant;
 
 	return NONE;
@@ -389,11 +389,10 @@ city_event_type harvest_bounty(city_of_sumeria_t *city,
 	city->bushels_preserved += new_bushels - city->bushels_destroyed;
 
 	random_event_value = hamurabi_random_event_value();
-	city->people_arrived =
-	    (uint16_t)(random_event_value * ((20 * city->acres_owned) + city->bushels_preserved) / city->population / (100 + 1));
+	city->people_arrived = random_event_value * ((20 * city->acres_owned) + city->bushels_preserved) / city->population / (100 + 1);
 
-	random_event_value = (uint16_t)(*acres_buy_or_sell / 20);
-	*acres_buy_or_sell = (uint16_t)(10 * ((2 * RANDOM(1)) - 0.3));
+	random_event_value = *acres_buy_or_sell / 20;
+	*acres_buy_or_sell = 10 * ((2 * RANDOM(1)) - 0.3);
 
 	if (city->population < random_event_value) {
 		city->people_starved = 0;
