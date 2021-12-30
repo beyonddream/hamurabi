@@ -1,4 +1,4 @@
-#include "../include/hamurabi.h"
+#include "hamurabi.h"
 #include <inttypes.h>
 #include <stdarg.h>
 #include <stdio.h>

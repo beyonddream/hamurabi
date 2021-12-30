@@ -6,7 +6,7 @@
  * License: See LICENSE file.
  *
  */
-#include "../include/hamurabi.h"
+#include "hamurabi.h"
 
 int main()
 {
