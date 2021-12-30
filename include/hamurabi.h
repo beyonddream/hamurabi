@@ -6,16 +6,16 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define RAND(n, x)         \
-	do {                   \
-		srand(time(NULL)); \
-		*(x) = RANDOM(n);  \
-	} while (0);
+#define RAND(n, x)                  \
+	do {                            \
+		srand(time(NULL));          \
+		*(x) = (uint16_t)RANDOM(n); \
+	} while (0)
 
 #ifdef _HAMURABI_TEST
 #define RANDOM(n) RANDOM_TEST(n)
 #else
-#define RANDOM(n) (uint16_t)(((double)rand() / (double)(RAND_MAX + 1u)) * (n))
+#define RANDOM(n) (((double)rand() / (double)(RAND_MAX + 1u)) * (n))
 #endif
 
 enum city_event_type {
