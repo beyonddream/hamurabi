@@ -394,11 +394,11 @@ city_event_type harvest_bounty(city_of_sumeria_t *city,
 	random_event_value = *acres_buy_or_sell / 20;
 
 	{
-		uint16_t another_random_event_value = RANDOM(1);
-		if ((another_random_event_value * 20) <= 3) {
+		double another_random_event_value = RANDOM(1);
+		if ((uint16_t)(another_random_event_value * 20) <= 3) {
 			*acres_buy_or_sell = 0;
 		} else {
-			*acres_buy_or_sell = (another_random_event_value * 20) - 3;
+			*acres_buy_or_sell = ((uint16_t)(another_random_event_value * 20)) - 3;
 		}
 	}
 
