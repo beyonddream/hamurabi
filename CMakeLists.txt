@@ -14,6 +14,8 @@ set(CMAKE_C_STANDARD 11)
 # Show all warning messages
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Og")
 
+include_directories(include)
+
 list(APPEND EXTRA_SRC
         include/banned.h
         include/hamurabi.h
