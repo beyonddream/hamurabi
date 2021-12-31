@@ -4,6 +4,7 @@ project(hamurabi VERSION 0.1
         DESCRIPTION "Hamurabi - a text adventure game written in C99"
             LANGUAGES C ASM
         )
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(DISABLE_TESTS "If tests should be compiled or not" OFF)
 
