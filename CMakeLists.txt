@@ -6,7 +6,7 @@ project(hamurabi VERSION 0.1
         )
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-option(DISABLE_TESTS "If tests should be compiled or not" OFF)
+option(DISABLE_TESTS "If tests should be compiled or not" ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -33,6 +33,7 @@ add_executable(hamurabi
          ${EXTRA_SRC}
         )
 
+if (NOT DISABLE_TESTS)
 find_package(Check REQUIRED)
 
 enable_testing()
@@ -42,3 +43,4 @@ set(LIBS
 )
 
 CHECK_TEST(check_hamurabi LIBS ${LIBS} SRC ${HAMURABI_SRC} test/check_hamurabi.c DEPS hamurabi)
+endif()

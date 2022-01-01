@@ -17,7 +17,7 @@ function build_hamurabi() {
 
         if [ ! -f "Makefile" ]; then
             echo "Configuring app"
-            cmake .. $@
+            cmake $@ ..
         fi
 
 
@@ -31,7 +31,7 @@ function build_hamurabi() {
 if [ "$1" = "r" ]
 then
     if [ ! -f "${BUILD_DIR}/hamurabi" ]; then
-        build_hamurabi
+        build_hamurabi "$@"
     fi
     pushd ${BUILD_DIR}
     ./hamurabi
@@ -42,5 +42,5 @@ then
     ctest -j8
     popd
 else
-    build_hamurabi
+    build_hamurabi "$@"
 fi

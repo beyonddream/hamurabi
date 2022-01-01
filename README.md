@@ -14,8 +14,16 @@ Tested only on Macos with clang version 11.0 compiler and below dependencies.
 
 # Testing
 
-1. `./build.sh`
+Note: Testing uses Check so make sure cmake can find it. By default generating hamurabi with Check test is turned off.
+
+To enable it:
+
+1. `rm -rf build/ && ./build.sh "-DDISABLE_TESTS=OFF"`
+
+Then run it:
+
 2. `./build.sh t`
+
 
 # Running the Game
 
