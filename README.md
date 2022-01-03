@@ -12,6 +12,12 @@ Tested only on Macos with clang version 11.0 compiler and below dependencies.
 
 1. `./build.sh`
 
+NOTE: To enable debug builds with asan enabled do:
+
+2. `./build.sh "-DCMAKE_BUILD_TYPE=asan"`
+
+Similar for other sanitizers (check the CMakeLists.txt)
+
 # Testing
 
 Note: Testing uses Check so make sure cmake can find it. By default generating hamurabi with Check test is turned off.
