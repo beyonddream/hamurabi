@@ -262,14 +262,15 @@ void print_judgement_good_message()
 void read_input(city_of_sumeria_t *city, uint16_t *store)
 {
 	int status;
-	while ((status = scanf("%" PRIu16, store)) == 0) {
-		scanf("%*[^\n]");
+	while ((status = scanf("%hu", store)) == 0) {
+		(void)!scanf("%*[^\n]");
 	}
 
 	if (status == EOF) {
 		hamurabi_illegal_input();
 		hamurabi_end();
 		city_destroy(city);
+		exit(EXIT_FAILURE);
 	}
 
 	return;
@@ -282,11 +283,6 @@ city_event_type buy_acres(city_of_sumeria_t *city, uint16_t *acres_buy_or_sell)
 
 	printf("How many acres do you wish to buy?");
 	read_input(city, acres_buy_or_sell);
-
-	if (*acres_buy_or_sell < 0) {
-		hamurabi_illegal_input();
-		return UNKNOWN;
-	}
 
 	if ((bushels_per_acre * (*acres_buy_or_sell)) > bushels_preserved) {
 		hamurabi_illegal_bushels_input(bushels_preserved);
@@ -309,11 +305,6 @@ city_event_type sell_acres(city_of_sumeria_t *city, uint16_t *acres_buy_or_sell)
 	printf("How many acres do you wish to sell?");
 	read_input(city, acres_buy_or_sell);
 
-	if (*acres_buy_or_sell < 0) {
-		hamurabi_illegal_input();
-		return UNKNOWN;
-	}
-
 	if (*acres_buy_or_sell >= city->acres_owned) {
 		hamurabi_illegal_acres_input(city->acres_owned);
 		return SELL_ACRES;
@@ -333,11 +324,6 @@ city_event_type feed_people(city_of_sumeria_t *city, uint16_t *acres_buy_or_sell
 	printf("How many bushels do you wish to feed your people?");
 	read_input(city, bushels_to_feed_people);
 
-	if (*bushels_to_feed_people < 0) {
-		hamurabi_illegal_input();
-		return UNKNOWN;
-	}
-
 	if (*bushels_to_feed_people > bushels_preserved) {
 		hamurabi_illegal_bushels_input(bushels_preserved);
 		return FEED_PEOPLE;
@@ -354,11 +340,6 @@ city_event_type plant_seeds(city_of_sumeria_t *city)
 
 	printf("How many acres do you wish to plant with seed?");
 	read_input(city, acres_to_plant);
-
-	if (*acres_to_plant < 0) {
-		hamurabi_illegal_input();
-		return UNKNOWN;
-	}
 
 	if (*acres_to_plant == 0) {
 		city->acres_planted_with_seed = *acres_to_plant;

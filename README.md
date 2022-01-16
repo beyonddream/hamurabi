@@ -35,6 +35,11 @@ Then run it:
 
 1. `./build.sh r`
 
+# Running the Game via Docker
+
+1. `docker build -t hamurabi -f Dockerfile .`
+2. `docker run -it hamurabi`
+
 # Game details
 
 Original game source - doc/HMRABI.txt
