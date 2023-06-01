@@ -57,3 +57,6 @@ Testing/
 
 # ctags
 tags
+
+# IDE
+.vscode
