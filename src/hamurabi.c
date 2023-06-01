@@ -1,9 +1,10 @@
-#include "hamurabi.h"
 #include <inttypes.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+/* Note: should be at the end of header list since it redefines banned functions */
+#include "hamurabi.h"
 
 struct city_of_sumeria {
 	uint16_t bushels_preserved;

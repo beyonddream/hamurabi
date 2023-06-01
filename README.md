@@ -85,3 +85,8 @@ The game ends if any of the below condition satisfies:
 In your local development, you can run ctags on the project to make it easy to jump around functions:
 
 1. `ctags -R -a .`
+
+
+# License
+
+MIT License Copyright (c) 2022, 2023 beyonddream

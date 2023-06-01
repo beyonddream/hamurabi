@@ -1,28 +1,24 @@
 #ifndef BANNED_H
 #define BANNED_H
 
-/*
- * from : https://github.com/git/git/blob/master/banned.h
- *
- * This header lists functions that have been banned from our code base,
- * because they're too easy to misuse (and even if used correctly,
- * complicate audits). Including this header turns them into compile-time
- * errors.
- */
-
-#define BANNED(func) sorry_##func##_is_a_banned_function
+#define BANNED(func) banned_function_##func##_called
 
 #undef strcpy
-#define strcpy(x, y) BANNED(strcpy)
 #undef strcat
-#define strcat(x, y) BANNED(strcat)
 #undef strncpy
-#define strncpy(x, y, n) BANNED(strncpy)
 #undef strncat
-#define strncat(x, y, n) BANNED(strncat)
-
 #undef sprintf
 #undef vsprintf
+#undef gets
+/* thread unsafe */
+#undef strtok
+
+#define strcpy(x, y) BANNED(strcpy)
+#define strcat(x, y) BANNED(strcat)
+#define strncpy(x, y, n) BANNED(strncpy)
+#define strncat(x, y, n) BANNED(strncat)
+#define gets(x) BANNED(gets)
+#define strtok(x, y) BANNED(strtok)
 #ifdef HAVE_VARIADIC_MACROS
 #define sprintf(...) BANNED(sprintf)
 #define vsprintf(...) BANNED(vsprintf)
